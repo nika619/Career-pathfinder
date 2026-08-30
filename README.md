@@ -1,7 +1,7 @@
 # 🧭 Career PathFinder
 
 > **Grounded, Adaptive & Explainable AI Learning Path Engine**  
-> *Built for the HCL Amplified National Hackathon*
+> *Autonomous Prerequisite Graph Orchestration & Bayesian Cognitive Modeling*
 
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.141.1-009688.svg)](https://fastapi.tiangolo.com/)
@@ -17,7 +17,7 @@
 
 ---
 
-## 💡 Executive Summary & The Core Architectural Principle
+## 💡 Executive Summary & Core Architectural Principle
 
 Modern online education provides hundreds of thousands of disconnected courses, yet learners constantly fail because existing recommendation platforms cannot answer the fundamental question:
 
@@ -36,7 +36,7 @@ Career PathFinder hard-fences the LLM away from curriculum compilation. Instead,
 
 ## ⚔️ Architectural Comparison
 
-| Dimension | Naive LLM Roadmaps (Chatbots) | 🧭 Career PathFinder SaaS Engine |
+| Dimension | Naive LLM Roadmaps (Chatbots) | 🧭 Career PathFinder Engine |
 | :--- | :--- | :--- |
 | **Course Grounding** | Hallucinates fictional course names & dead links | **105 Curated Real Courses** (Coursera, edX, Udemy, Harvard, etc.) |
 | **Prerequisite Guarantee** | High inversion rate (schedules advanced topics first) | **Strict DAG Topological Sort — 0.00% Violations** across 1,000 tested learners |
@@ -194,7 +194,23 @@ The application is hardened according to OWASP Top 10 standards:
 - **OWASP Security Headers**: Injected via custom ASGI middleware (`X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, Strict `Content-Security-Policy`).
 - **Input Sanitization & Injection Defense**: Regex validation on `user_id` preventing path traversal; prompt-injection delimiters and XML tags neutralized before LLM consumption.
 - **In-Memory Rate Limiting**: Token-bucket rate limiter guarding conversational endpoints against abuse.
-- **Judge / Tester Header Override**: Evaluators can provide temporary session API keys via the UI or `X-Gemini-API-Key` HTTP header without mutating server environments.
+- **API Key Header Override**: Evaluators can provide temporary session API keys via the UI or `X-Gemini-API-Key` HTTP header without mutating server environments.
+
+---
+
+## 🔌 REST API Surface Overview
+
+| Endpoint | Method | Description |
+| :--- | :---: | :--- |
+| `/api/goal` | `POST` | Parses natural language career goals and maps to O\*NET target profiles. |
+| `/api/diagnostic/start` | `POST` | Initializes an adaptive BKT diagnostic session for unverified skills. |
+| `/api/diagnostic/answer` | `POST` | Evaluates response, updates BKT posterior $P(L)$, and computes early stopping. |
+| `/api/roadmap/generate` | `POST` | Compiles topologically sorted roadmap via Kahn's DAG sort + dense retrieval. |
+| `/api/milestone/evaluate` | `POST` | Scores capstone project rubric and triggers dynamic DAG re-planning. |
+| `/api/chat` | `POST` | Fenced LLM career coach grounded strictly to active DAG session state. |
+| `/api/graph` | `GET` | Returns full 53-node / 61-edge DAG topology, clusters, and role metadata. |
+| `/api/export/markdown` | `GET` | Exports complete personalized learning path as a Markdown syllabus. |
+| `/api/health` | `GET` | Telemetry endpoint verifying database, embeddings, and engine health. |
 
 ---
 
@@ -260,10 +276,11 @@ career-pathfinder/
 │   └── static/                  # Dark editorial single-page dashboard
 │       ├── index.html           # Accessible HTML5 structure, ARIA dialogs & landmarks
 │       ├── style.css            # Base design system & typography tokens
-│       ├── reskin.css           # Cartographer's Observatory editorial presentation overlay
+│       ├── reskin.css           # Cartographer's Observatory presentation overlay
 │       ├── app.js               # Reactive state manager, SVG DAG renderer, BKT driver
 │       └── three-scene.js       # Three.js ambient starfield observatory
 ├── docs/
+│   ├── ARCHITECTURE.md          # Comprehensive architectural specification & design handbook
 │   └── assets/                  # High-resolution architectural screenshots
 ├── tests/
 │   ├── test_core.py             # Graph sorting, gap ranking, BKT math, e2e journeys
@@ -274,27 +291,11 @@ career-pathfinder/
 ├── benchmarks/
 │   └── run_benchmark.py         # 1,000-learner Monte Carlo simulation suite
 ├── requirements.txt             # Pinned runtime dependencies (pure NumPy, no Torch)
-├── SOLUTION_DOCUMENTATION.pdf   # Formatted hackathon solution documentation
-├── MASTER_PROJECT_HANDBOOK.md   # Complete architectural specification & ground-truth handbook
-├── DEMO_VIDEO_SCRIPT.md         # 3.5-minute structured video demo walkthrough
 ├── Dockerfile                   # Multi-stage production container definition
 └── docker-compose.yml           # Local containerized orchestration
 ```
 
 ---
 
-## 🏆 Scoring Alignment Matrix
-
-| Hackathon Criterion | Weight | How Career PathFinder Achieves Excellence |
-| :--- | :---: | :--- |
-| **Functionality & Completeness** | **25%** | Complete closed-loop journey across 6 target roles + open-world synthesis: goal intake $\to$ adaptive diagnostic $\to$ topological roadmap $\to$ glass-box explanation $\to$ capstone rubric $\to$ live re-planning. |
-| **Problem Understanding & Design** | **20%** | Solves the root cause (**prerequisite sequencing** and **competency grounding**), not superficial course aggregation. Strict separation of concerns (engine decides; LLM phrases). |
-| **AI / ML Implementation** | **20%** | Mathematical **Kahn's topological sort**, **Corbett-Anderson BKT cognitive modeling**, **dense vector embedding retrieval** with TF-IDF fallback, and fenced Gemini intelligence. |
-| **Innovation & Creativity** | **15%** | **"We measure, we don't assume"** (BKT) + **"Grounded, not hallucinated"** (O\*NET + 105 courses) + interactive SVG DAG explorer + Glass-Box inspection. |
-| **User Experience & Design** | **10%** | Dark editorial aesthetics ("Cartographer's Observatory"), Three.js ambient background, accessible ARIA landmarks, `prefers-reduced-motion` compliance. |
-| **Performance & Code Quality** | **10%** | **54/54 automated tests**, **20/20 live integration tests**, sub-millisecond execution, pure NumPy deployment, OWASP security hardening. |
-
----
-
-## 📄 License & Attribution
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information. Built for the **HCL Amplified National Hackathon**.
+## 📄 License
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.

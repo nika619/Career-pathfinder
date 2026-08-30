@@ -34,3 +34,8 @@ backend/data/onet/
 backend/data/sessions.db
 backend/data/*.db-wal
 backend/data/*.db-shm
+
+# Documentation & Export Artifacts
+*.pdf
+*.html
+

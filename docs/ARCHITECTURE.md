@@ -251,9 +251,14 @@ docker-compose up --build
 
 ---
 
-## 9. Hackathon Pitch Deck Script & Judge Q&A Cheat-Sheet
+## 9. Architectural Deep-Dive & Technical FAQ
 
-* **Hook (0:00 - 0:30):** *"Every EdTech platform recommends courses, and every modern chatbot generates a 12-week roadmap. But they all fail at the same three things: they hallucinate, they schedule machine learning before algebra, and they have no idea what you actually know."*
-* **The Solution (0:30 - 1:30):** *"Career PathFinder separates generation from orchestration. We use Kahn's topological sort on a 53-node O*NET skill graph, Bayesian Knowledge Tracing for adaptive student modeling, and dense vector embeddings for course retrieval. The LLM only translates the math into human coaching."*
-* **The Demo (1:30 - 2:30):** *"Watch what happens when our learner takes the diagnostic: answering correctly stops the quiz in 2 questions because confidence reached 88%. The resulting roadmap automatically prunes mastered skills. When we inspect Step 3, the Glass-Box trace proves the exact O*NET labor-market justification."*
-* **The Clincher (2:30 - 3:00):** *"Validated across 1,000 simulated learners with a 0.00% prerequisite violation rate, 53 passing automated tests, sub-millisecond execution, and enterprise OWASP security. Career PathFinder is ready for production today."*
+### Q1: Why not let an LLM generate the curriculum graph directly?
+**Answer:** Large Language Models optimize for plausible next-token likelihood, not topological DAG invariants. When prompted to generate learning sequences, LLMs routinely introduce subtle circular dependencies, invent non-existent course URLs, and invert prerequisite orderings. In Career PathFinder, the DAG topology is strictly managed by **NetworkX and Kahn's topological sort**, while course lookups are anchored in real, pre-indexed vectors. The LLM is strictly fenced to semantic translation, conversational coaching, and query answering.
+
+### Q2: Why Bayesian Knowledge Tracing (BKT) over simple quiz scores?
+**Answer:** Simple quiz scores treat every question independently and suffer from measurement noise (guesses and slips). BKT maintains an explicit hidden Markov model of the student's latent knowledge state $P(L_t)$, updating dynamically after every response based on empirically calibrated slip ($P(S)$) and guess ($P(G)$) probabilities. This allows the system to establish high confidence in fewer questions (adaptive early-stopping) and mathematically weight subsequent skill gaps.
+
+### Q3: How is sub-millisecond execution achieved without GPU infrastructure?
+**Answer:** Rather than generating embeddings on-the-fly with heavy PyTorch runtimes, dense vectors for all 105 courses and 53 skills are pre-computed offline using `all-MiniLM-L6-v2` and stored as compact `.npy` matrices. At runtime, vector cosine similarity and multi-factor ranking are computed via vectorized NumPy operations, executing in **~0.83 ms** per learner roadmap.
+
