@@ -1,0 +1,29 @@
+# Multi-stage lightweight Python 3.11 image
+FROM python:3.11-slim AS builder
+
+WORKDIR /app
+
+# Install system dependencies & requirements
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+# Final runner stage
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Copy installed packages from builder
+COPY --from=builder /root/.local /root/.local
+ENV PATH=/root/.local/bin:$PATH
+
+# Copy application files
+COPY . .
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+ENV PORT=8000
+
+EXPOSE 8000
+
+# Run FastAPI server
+CMD ["python", "run.py"]

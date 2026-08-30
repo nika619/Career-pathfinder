@@ -1,0 +1,4 @@
+# Build-time only — needed ONLY to regenerate embeddings via
+# backend/scripts/build_embeddings.py. NOT required at runtime.
+-r requirements.txt
+sentence-transformers==3.3.1

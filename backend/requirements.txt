@@ -1,0 +1,25 @@
+# Career PathFinder — Runtime Dependencies (pinned, deploy-safe)
+# Runtime is intentionally light: NO torch, NO pandas. Semantic retrieval uses
+# precomputed embeddings (backend/data/*.npy) read with numpy only.
+
+# --- API framework ---
+fastapi==0.141.1
+uvicorn[standard]==0.34.0
+pydantic==2.13.4
+
+# --- Numerics: skill graph, gap math, embedding cosine lookup ---
+numpy==2.4.4
+networkx==3.6.1
+
+# --- Course retrieval: TF-IDF fallback when embeddings/skill unavailable ---
+scikit-learn==1.8.0
+
+# --- AI: Gemini for parse / explain / answer (fenced; deterministic fallback if absent) ---
+google-generativeai==0.8.3
+
+# --- Config ---
+python-dotenv==1.2.2
+
+# --- Testing (httpx REQUIRED by FastAPI TestClient in tests/test_integrity.py) ---
+pytest==9.1.1
+httpx==0.28.1
