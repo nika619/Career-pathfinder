@@ -27,48 +27,64 @@ Career PathFinder is an **enterprise-grade, grounded, adaptive, and explainable 
 
 > **"The deterministic engine decides WHAT to learn and IN WHAT ORDER. The language model ONLY phrases, coaches, and answers queries within that grounded context."**
 
-```
-                     ┌──────────────────────────────────────────────┐
-                     │   Natural-Language Career Goal & Preferences │
-                     └──────────────────────┬───────────────────────┘
-                                            │
-                                            ▼
-                     ┌──────────────────────────────────────────────┐
-                     │   1. Fenced Natural Language Intent Parser   │
-                     └──────────────────────┬───────────────────────┘
-                                            │
-                                            ▼
-                     ┌──────────────────────────────────────────────┐
-                     │   2. O*NET Weighted Role Taxonomy Mapping    │
-                     └──────────────────────┬───────────────────────┘
-                                            │
-                                            ▼
-                     ┌──────────────────────────────────────────────┐
-                     │   3. Adaptive BKT Diagnostic Measurement     │
-                     └──────────────────────┬───────────────────────┘
-                                            │
-                                            ▼
-                     ┌──────────────────────────────────────────────┐
-                     │   4. Kahn's Topological Sort on 53-Node DAG  │
-                     └──────────────────────┬───────────────────────┘
-                                            │
-                                            ▼
-                     ┌──────────────────────────────────────────────┐
-                     │   5. Multi-Factor Course Recommendation (MRS)│
-                     └──────────────────────┬───────────────────────┘
-                                            │
-                                            ▼
-                     ┌──────────────────────────────────────────────┐
-                     │   6. Glass-Box Explanations & AI Coach       │
-                     └──────────────────────┬───────────────────────┘
-                                            │
-                                            ▼
-                     ┌──────────────────────────────────────────────┐
-                     │   7. Dynamic Re-Planner on Pass / Remediation│
-                     └──────────────────────────────────────────────┘
+> 📐 **[View Interactive Architecture Diagram →](architecture_diagram.html)**  
+> *(Open in browser — dark-themed layered node diagram with hover tooltips)*
+
+```mermaid
+flowchart TD
+    subgraph USER_PERIMETER["🖥️  USER_PERIMETER — Browser Interface"]
+        U1["Dark Editorial SPA\nVanilla HTML · CSS · JS\nThree.js ambient scene · ARIA-accessible"]
+    end
+
+    subgraph API_LAYER["⚙️  API_LAYER — FastAPI + OWASP Middleware"]
+        direction LR
+        A1["/api/goal\nGoal Parser"]
+        A2["/api/diagnostic/*\nBKT Engine"]
+        A3["/api/roadmap/generate\nDAG Compiler"]
+        A4["/api/milestone/evaluate\nRubric + Re-planner"]
+        A5["/api/chat\nFenced Coach"]
+        A6["/api/graph · /api/export\nTopology · Syllabus"]
+    end
+
+    subgraph ENGINE_CORE["🧠  ENGINE_CORE — Deterministic Computation"]
+        direction LR
+        E1["Kahn's Topological Sort\n53-Node DAG · 61 Edges\nskill_graph.py"]
+        E2["Bayesian Knowledge Tracing\nCorbett–Anderson HMM\ndiagnostic.py"]
+        E3["O*NET Skill-Gap Engine\nImp × (1 − Mastery)\ngap.py"]
+        E4["Semantic Retrieval MRS\nMiniLM Cosine + TF-IDF fallback\nretrieval.py"]
+        E5["Journey Compiler\nGlass-Box Trace · Re-planner\nplanner.py"]
+    end
+
+    subgraph PERSISTENCE_LAYER["🗄️  PERSISTENCE_LAYER — Stateful Sovereignty"]
+        direction LR
+        P1["In-Memory LRU Cache\nSub-ms lookups\nstore.py"]
+        P2["SQLite WAL — sessions.db\nDurable persistence\nstore.py"]
+        P3["course_emb.npy · skill_emb.npy\n384-dim MiniLM · Offline precomputed\ndata/"]
+        P4["courses.json · skill_graph.json\n105 Real Courses · DAG Topology\ndata/"]
+        P5["role_skills.json · item_bank.json\nO*NET Weights · 139 BKT Items\ndata/"]
+    end
+
+    subgraph INFRA_POWER["☁️  INFRASTRUCTURE_POWER — External Compute (Optional)"]
+        direction LR
+        I1["Gemini 1.5 Flash — Google AI\nFenced: goal parsing · trace phrasing · grounded Q&A\nassistant.py · BYOK"]
+        I2["Deterministic Fallback\nFull engine operates without API key\nZero-dependency mode"]
+    end
+
+    USER_PERIMETER -->|"Goal Input · Answers · Queries"| API_LAYER
+    API_LAYER -->|"Parsed Intent · BKT Signals · Gap Vectors"| ENGINE_CORE
+    ENGINE_CORE <-->|"Read/Write Session"| PERSISTENCE_LAYER
+    ENGINE_CORE -->|"Prompt Injection (fenced)"| INFRA_POWER
+    API_LAYER <-->|"Session State"| PERSISTENCE_LAYER
+    INFRA_POWER -.->|"Streaming Response"| API_LAYER
+
+    style USER_PERIMETER fill:#0d2137,stroke:#388bfd,color:#79c0ff
+    style API_LAYER fill:#0d2a15,stroke:#56d364,color:#7ee787
+    style ENGINE_CORE fill:#1a0d37,stroke:#8957e5,color:#d2a8ff
+    style PERSISTENCE_LAYER fill:#2a1f00,stroke:#e6b84a,color:#e6b84a
+    style INFRA_POWER fill:#2a0d0d,stroke:#f78166,color:#f78166
 ```
 
----
+
 
 ## 3. The AI / ML Engines in Deep Detail
 
