@@ -1,0 +1,710 @@
+/* ============================================================================
+   Career PathFinder — RESKIN LAYER  ("Cartographer's Observatory")
+   ----------------------------------------------------------------------------
+   An isolated visual refinement loaded AFTER style.css. It elevates the
+   existing dark-editorial system: an editorial display serif (Fraunces),
+   warmer "brass" ink so gold reads as candlelight, hairline letterhead rules,
+   refined kickers/labels, tabular instrument numerals, and finer controls.
+   Structure and behaviour are untouched — this is purely presentational.
+   ============================================================================ */
+
+/* ---- 1. Refined design tokens (warm the darks so gold becomes brass) ---- */
+:root {
+  --ink: #0A0A0C;
+  --surface: #131319;
+  --raised: #1A1A22;
+  --raised-hover: #22222D;
+  --line: #2A2A36;
+  --line-soft: #1D1D26;
+  --text: #F6F4F0;
+  --muted: #9B9AA6;
+  --faint: #6A6975;
+
+  --gold: #E3AC53;
+  --gold-soft: #F0C574;
+  --gold-deep: #C68A34;
+  --gold-glow: rgba(227, 172, 83, 0.16);
+  --brass: linear-gradient(135deg, #F0C574 0%, #D99A3C 55%, #C68A34 100%);
+
+  --display-serif: "Fraunces", "Outfit", Georgia, serif;
+  --display-font: "Fraunces", "Outfit", Georgia, serif;
+  --serif: "Fraunces", "Outfit", Georgia, serif;
+
+  --hairline: linear-gradient(90deg, transparent, rgba(227, 172, 83, 0.55), transparent);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03), 0 22px 48px -26px rgba(0, 0, 0, 0.78);
+  --shadow-pop: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+}
+
+/* ---- 2. Editorial display serif for headlines ---- */
+.brand-title,
+.hero-headline,
+.side-card-title,
+.modal-title,
+#diag-role-title,
+#dash-role-title,
+.capstone-project-name,
+.diag-skill-banner h3 {
+  font-family: var(--display-serif);
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+.hero-headline {
+  font-family: var(--display-serif);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 4.6vw, 3.35rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+}
+.brand-title { letter-spacing: -0.02em; }
+.brand-title span { color: var(--gold); }
+
+/* Give headline emphasis a warm ink, not pure white */
+.hero-headline, #dash-role-title, #diag-role-title, .modal-title { color: #FBF7EF; }
+
+/* ---- 3. Kicker / label refinement (mono, tracked, with a brass tick) ---- */
+.kicker,
+.intake-badge,
+.tag,
+.mastery-lbl,
+.gauge-detail + .chip,
+.input-label,
+.pref-label {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 10px;
+  color: var(--muted);
+}
+.kicker::before,
+.intake-badge::before {
+  content: "";
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  vertical-align: middle;
+  margin-right: 8px;
+  background: var(--gold);
+  opacity: 0.9;
+}
+.intake-badge {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 14px;
+  background: rgba(227, 172, 83, 0.04);
+}
+
+/* ---- 4. Hairline "letterhead" rule on the primary cards ---- */
+.intake-card,
+.diagnostic-card,
+.side-card,
+.modal-card {
+  position: relative;
+  box-shadow: var(--shadow-card);
+}
+.intake-card::before,
+.diagnostic-card::before,
+.side-card::before,
+.modal-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--hairline);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* ---- 5. Tabular instrument numerals for all metrics ---- */
+.gauge-value,
+.mastery-pct,
+#metric-readiness-pct,
+.rubric-pts,
+.rubric-score-badge,
+.diag-progress-badge,
+.eval-result-score {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.gauge-value { color: var(--gold-soft); }
+
+/* ---- 6. Refined controls: primary (brass), ghost, pills, chips ---- */
+.btn-primary {
+  background: var(--brass);
+  color: #241905;
+  font-weight: 700;
+  border: 1px solid rgba(227, 172, 83, 0.5);
+  box-shadow: 0 10px 26px -12px rgba(227, 172, 83, 0.55);
+  transition: transform 0.16s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.btn-primary:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px -14px rgba(227, 172, 83, 0.62);
+}
+
+.btn-ghost, .btn-ghost-icon {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.015);
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+.btn-ghost:hover, .btn-ghost-icon:hover {
+  border-color: rgba(227, 172, 83, 0.5);
+  color: var(--gold-soft);
+  background: rgba(227, 172, 83, 0.05);
+}
+
+.engine-pill {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  border-radius: 999px;
+}
+
+.chip, .quick-chip, .graph-filter-btn {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+.quick-chip:hover, .graph-filter-btn:hover {
+  border-color: rgba(227, 172, 83, 0.45);
+  color: var(--gold-soft);
+}
+.chip.on, .graph-filter-btn.active {
+  border-color: rgba(227, 172, 83, 0.55);
+  background: rgba(227, 172, 83, 0.10);
+  color: var(--gold-soft);
+}
+
+/* The readiness fill + progress use the brass gradient */
+.readiness-bar-fill { background: var(--brass) !important; }
+
+/* ---- 7. Atmospheric retune: brass primary, dim the cool secondary ---- */
+.glow-1 {
+  background: radial-gradient(circle, rgba(227, 172, 83, 0.14) 0%, rgba(10, 10, 12, 0) 70%);
+}
+.glow-2 {
+  background: radial-gradient(circle, rgba(120, 170, 150, 0.05) 0%, rgba(10, 10, 12, 0) 72%);
+}
+
+/* Header: a touch warmer, thinner rule */
+.app-header {
+  background: rgba(14, 14, 18, 0.72);
+  border-bottom: 1px solid rgba(227, 172, 83, 0.10);
+}
+
+/* Chat + coach reads a hair warmer; refined avatar ring */
+.coach-avatar-3d {
+  box-shadow: 0 0 0 1px rgba(227, 172, 83, 0.35), 0 8px 22px -10px rgba(227, 172, 83, 0.4);
+}
+
+/* Scrollbar to brass */
+* { scrollbar-color: rgba(227, 172, 83, 0.4) rgba(10, 10, 12, 0.6); }
+::-webkit-scrollbar-thumb { background: rgba(227, 172, 83, 0.32); }
+/* Canvas 3D background sits above body backdrop and below UI cards */
+#canvas-3d {
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+/* ============================================================================
+   8. LIGHT MODE THEME SYSTEM ("Cartographer's Sunlight Atelier & Parchment Library")
+   ============================================================================ */
+html[data-theme="light"],
+body.theme-light {
+  --ink: #F5F2EB;
+  --surface: #FCFAF6;
+  --raised: #EFEAE0;
+  --raised-hover: #E7E0D3;
+  --line: #DFD7C7;
+  --line-soft: #E9E3D6;
+  --text: #1C1917;
+  --muted: #57534E;
+  --faint: #78716C;
+
+  --gold: #C06A0A;
+  --gold-soft: #D97706;
+  --gold-deep: #92400E;
+  --gold-glow: rgba(192, 106, 10, 0.18);
+  --brass: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #92400E 100%);
+  --code-bg: #EBE5D8;
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.95) inset, 0 16px 36px -12px rgba(68, 48, 20, 0.12), 0 2px 6px rgba(68, 48, 20, 0.04);
+  --shadow-pop: 0 24px 60px -15px rgba(68, 48, 20, 0.20);
+  --hairline: linear-gradient(90deg, transparent, rgba(192, 106, 10, 0.55), transparent);
+
+  background: #F5F2EB !important;
+  color: #1C1917 !important;
+  scrollbar-color: rgba(192, 106, 10, 0.45) #EFEAE0;
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-track { background: #EFEAE0; }
+html[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(192, 106, 10, 0.40); }
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: rgba(192, 106, 10, 0.80); }
+
+/* Headlines & Editorial Serifs */
+html[data-theme="light"] .hero-headline,
+html[data-theme="light"] #dash-role-title,
+html[data-theme="light"] #diag-role-title,
+html[data-theme="light"] .modal-title,
+html[data-theme="light"] .side-card-title,
+html[data-theme="light"] .brand-title,
+html[data-theme="light"] .node-title-wrap h3,
+html[data-theme="light"] .capstone-project-name,
+html[data-theme="light"] .diag-skill-banner h3 {
+  font-family: var(--display-serif);
+  color: #1C1917 !important;
+  letter-spacing: -0.02em;
+}
+
+html[data-theme="light"] .brand-title span {
+  color: #C06A0A !important;
+}
+
+html[data-theme="light"] .hero-sub,
+html[data-theme="light"] .brand-sub,
+html[data-theme="light"] .muted,
+html[data-theme="light"] .node-desc,
+html[data-theme="light"] .explain-intro {
+  color: #57534E !important;
+}
+
+/* Kickers & Badges in Light Mode */
+html[data-theme="light"] .kicker,
+html[data-theme="light"] .intake-badge,
+html[data-theme="light"] .tag,
+html[data-theme="light"] .mastery-lbl,
+html[data-theme="light"] .input-label,
+html[data-theme="light"] .pref-label {
+  color: #78716C !important;
+}
+html[data-theme="light"] .kicker::before,
+html[data-theme="light"] .intake-badge::before {
+  background: #C06A0A !important;
+}
+html[data-theme="light"] .intake-badge {
+  background: rgba(192, 106, 10, 0.08) !important;
+  border: 1px solid rgba(192, 106, 10, 0.28) !important;
+  color: #92400E !important;
+}
+
+/* Floating Glass Header */
+html[data-theme="light"] .app-header {
+  background: rgba(245, 242, 235, 0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(192, 106, 10, 0.18) !important;
+  box-shadow: 0 4px 20px -8px rgba(68, 48, 20, 0.08) !important;
+}
+
+/* Luxury Glassmorphic Cards */
+html[data-theme="light"] .intake-card,
+html[data-theme="light"] .diagnostic-card,
+html[data-theme="light"] .side-card,
+html[data-theme="light"] .node-card,
+html[data-theme="light"] .modal-card,
+html[data-theme="light"] .capstone-spec-box,
+html[data-theme="light"] .capstone-form-box,
+html[data-theme="light"] .eval-result-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  border: 1px solid rgba(192, 106, 10, 0.22) !important;
+  box-shadow: var(--shadow-card) !important;
+  border-radius: var(--radius-lg);
+}
+
+html[data-theme="light"] .intake-card::before,
+html[data-theme="light"] .diagnostic-card::before,
+html[data-theme="light"] .node-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+  height: 2px;
+  background: var(--hairline);
+  pointer-events: none;
+}
+
+html[data-theme="light"] .node-card:hover {
+  border-color: rgba(192, 106, 10, 0.55) !important;
+  box-shadow: 0 20px 48px -12px rgba(68, 48, 20, 0.18), 0 0 24px rgba(192, 106, 10, 0.12) !important;
+}
+
+/* Phase Divider Seal Banner */
+html[data-theme="light"] .phase-divider-banner::before {
+  background: linear-gradient(90deg, rgba(192, 106, 10, 0.6), rgba(192, 106, 10, 0.1), transparent) !important;
+}
+html[data-theme="light"] .phase-title-tag {
+  background: linear-gradient(135deg, #FFFDF8 0%, #FEF3C7 100%) !important;
+  border: 1.5px solid #D97706 !important;
+  color: #92400E !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px rgba(192, 106, 10, 0.20) !important;
+}
+
+/* Sub-sections inside Node Cards (Recessed Well) */
+html[data-theme="light"] .node-sub-sec {
+  background: rgba(245, 240, 230, 0.75) !important;
+  border: 1px solid rgba(192, 106, 10, 0.18) !important;
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+}
+html[data-theme="light"] .sub-sec-title {
+  color: #92400E !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em;
+}
+
+/* Course Rows (Crisp Floating Parchment Cards) */
+html[data-theme="light"] .course-row {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(192, 106, 10, 0.22) !important;
+  box-shadow: 0 2px 8px rgba(68, 48, 20, 0.05) !important;
+  transition: all 0.2s ease;
+}
+html[data-theme="light"] .course-row:hover {
+  background: #FFFBEB !important;
+  border-color: #D97706 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(192, 106, 10, 0.12) !important;
+}
+html[data-theme="light"] .course-name {
+  color: #1C1917 !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] .course-name:hover {
+  color: #C06A0A !important;
+}
+html[data-theme="light"] .course-score {
+  color: #C06A0A !important;
+  font-weight: 700 !important;
+}
+
+/* Capstone Project Showcase Box (Featured Parchment Scroll) */
+html[data-theme="light"] .project-box {
+  background: linear-gradient(135deg, rgba(255, 253, 247, 0.98) 0%, rgba(254, 243, 199, 0.65) 100%) !important;
+  border: 1.5px solid rgba(217, 119, 6, 0.40) !important;
+  box-shadow: 0 4px 18px rgba(192, 106, 10, 0.10) !important;
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+}
+html[data-theme="light"] .project-title {
+  color: #1C1917 !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+  letter-spacing: -0.01em;
+}
+html[data-theme="light"] .project-obj {
+  color: #44403C !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+}
+html[data-theme="light"] .project-deliverables {
+  color: #57534E !important;
+}
+html[data-theme="light"] .project-deliverables li {
+  color: #292524 !important;
+  font-size: 13px !important;
+}
+
+/* Form Controls & Inputs */
+html[data-theme="light"] textarea#goal-input,
+html[data-theme="light"] input#chat-input,
+html[data-theme="light"] select#pref-hours,
+html[data-theme="light"] select#pref-level,
+html[data-theme="light"] select#pref-format,
+html[data-theme="light"] .modal-input,
+html[data-theme="light"] .modal-textarea {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(192, 106, 10, 0.25) !important;
+  color: #1C1917 !important;
+  box-shadow: inset 0 2px 4px rgba(68, 48, 20, 0.03);
+}
+html[data-theme="light"] textarea#goal-input:focus,
+html[data-theme="light"] input#chat-input:focus,
+html[data-theme="light"] select:focus,
+html[data-theme="light"] .modal-input:focus,
+html[data-theme="light"] .modal-textarea:focus {
+  border-color: #C06A0A !important;
+  box-shadow: 0 0 0 4px rgba(192, 106, 10, 0.18) !important;
+  background: #FFFFFF !important;
+}
+
+/* Luxury Buttons */
+html[data-theme="light"] .btn-primary {
+  background: var(--brass) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em;
+  border: none !important;
+  box-shadow: 0 4px 18px rgba(192, 106, 10, 0.35) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+html[data-theme="light"] .btn-primary:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 8px 24px rgba(192, 106, 10, 0.45) !important;
+  transform: translateY(-1px);
+}
+html[data-theme="light"] .btn-ghost,
+html[data-theme="light"] .btn-ghost-icon,
+html[data-theme="light"] .option-btn {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(192, 106, 10, 0.25);
+  color: #1C1917;
+  backdrop-filter: blur(8px);
+}
+html[data-theme="light"] .btn-ghost:hover,
+html[data-theme="light"] .btn-ghost-icon:hover,
+html[data-theme="light"] .option-btn:hover {
+  background: #FFFDF8;
+  border-color: #C06A0A;
+  color: #92400E;
+  box-shadow: 0 2px 8px rgba(192, 106, 10, 0.12);
+}
+html[data-theme="light"] .btn-pass {
+  background: #DCFCE7 !important;
+  color: #15803D !important;
+  border: 1.5px solid #86EFAC !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .btn-pass:hover {
+  background: #22C55E !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+html[data-theme="light"] .btn-fail {
+  background: #FEE2E2 !important;
+  color: #B91C1C !important;
+  border: 1.5px solid #FCA5A5 !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .btn-fail:hover {
+  background: #EF4444 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* Chips & Badges */
+html[data-theme="light"] .chip,
+html[data-theme="light"] .quick-chip,
+html[data-theme="light"] .graph-filter-btn,
+html[data-theme="light"] .chip-example,
+html[data-theme="light"] .persona-chip,
+html[data-theme="light"] .engine-pill {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(192, 106, 10, 0.22);
+  color: #44403C;
+}
+html[data-theme="light"] .chip.on,
+html[data-theme="light"] .graph-filter-btn.active,
+html[data-theme="light"] .persona-chip.active,
+html[data-theme="light"] .chip-example:hover {
+  background: linear-gradient(135deg, #FEF3C7, #FDE68A) !important;
+  border-color: #D97706 !important;
+  color: #92400E !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 8px rgba(192, 106, 10, 0.14) !important;
+}
+
+/* Chat Stream in Light Mode (Warm Library Salon) */
+html[data-theme="light"] .chat-stream {
+  background: rgba(245, 240, 230, 0.65);
+  border: 1px solid rgba(192, 106, 10, 0.20);
+}
+html[data-theme="light"] .chat-msg.bot {
+  background: #FFFFFF;
+  border: 1px solid rgba(192, 106, 10, 0.20);
+  color: #1C1917;
+  box-shadow: 0 4px 14px rgba(68, 48, 20, 0.06);
+}
+html[data-theme="light"] .chat-msg.user {
+  background: var(--brass) !important;
+  color: #FFFFFF !important;
+  border: none;
+  box-shadow: 0 4px 14px rgba(192, 106, 10, 0.25);
+}
+html[data-theme="light"] .chat-input-bar {
+  border-top: 1px solid rgba(192, 106, 10, 0.20);
+  background: #FFFFFF;
+}
+
+/* Trace Table & Inspector Box */
+html[data-theme="light"] .inspector-box,
+html[data-theme="light"] .inline-trace-box {
+  background: rgba(255, 253, 247, 0.95) !important;
+  border: 1.5px solid rgba(192, 106, 10, 0.28) !important;
+  box-shadow: 0 4px 16px rgba(68, 48, 20, 0.06) !important;
+}
+html[data-theme="light"] .trace-table td {
+  border-bottom: 1px solid rgba(192, 106, 10, 0.15) !important;
+  color: #1C1917 !important;
+  font-size: 13.5px !important;
+}
+html[data-theme="light"] .trace-table td:first-child {
+  color: #78716C !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .trace-narrative {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(192, 106, 10, 0.25) !important;
+  color: #292524 !important;
+  padding: 14px !important;
+  border-radius: var(--radius-md) !important;
+  line-height: 1.6 !important;
+}
+
+/* 3D Readiness Hologram Gauge (Sunlit Brass Orb) */
+html[data-theme="light"] .gauge-ring-3d {
+  background: radial-gradient(circle at 35% 35%, #FFFDF5 0%, #FEF3C7 50%, #F59E0B 100%) !important;
+  border: 2px solid #D97706 !important;
+  box-shadow: 0 0 30px rgba(217, 119, 6, 0.35), inset 0 0 15px rgba(255, 255, 255, 0.9) !important;
+}
+html[data-theme="light"] .orbit-ring.orbit-1 {
+  border: 1.5px dashed #D97706 !important;
+}
+html[data-theme="light"] .orbit-ring.orbit-2 {
+  border: 1.5px dotted #0284C7 !important;
+}
+html[data-theme="light"] .gauge-value {
+  color: #78350F !important;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+  font-weight: 800 !important;
+}
+html[data-theme="light"] .gauge-detail {
+  color: #57534E !important;
+}
+html[data-theme="light"] .readiness-bar-bg {
+  background: #E7E0D3 !important;
+  border: 1px solid #DFD7C7 !important;
+}
+html[data-theme="light"] .readiness-bar-fill {
+  background: var(--brass) !important;
+}
+
+/* Diagnostic Mode */
+html[data-theme="light"] .question-text {
+  color: #1C1917 !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+}
+html[data-theme="light"] .option-btn {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(192, 106, 10, 0.25) !important;
+  color: #1C1917 !important;
+  box-shadow: 0 2px 6px rgba(68, 48, 20, 0.04);
+}
+html[data-theme="light"] .option-btn:hover {
+  background: #FFFBEB !important;
+  border-color: #D97706 !important;
+  color: #92400E !important;
+  transform: translateX(4px);
+}
+html[data-theme="light"] .option-btn.selected-correct {
+  background: #DCFCE7 !important;
+  border-color: #22C55E !important;
+  color: #15803D !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .option-btn.selected-wrong {
+  background: #FEE2E2 !important;
+  border-color: #EF4444 !important;
+  color: #B91C1C !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .mastery-pct {
+  color: #C06A0A !important;
+}
+html[data-theme="light"] .mastery-lbl {
+  color: #78716C !important;
+}
+html[data-theme="light"] .nodes-stream::before {
+  background: linear-gradient(#C06A0A, rgba(192, 106, 10, 0.2)) !important;
+}
+html[data-theme="light"] .node-card::before {
+  background: #FFFFFF !important;
+  border: 2.5px solid #C06A0A !important;
+}
+html[data-theme="light"] .node-card.passed::before {
+  background: #22C55E !important;
+  border-color: #22C55E !important;
+}
+html[data-theme="light"] .node-card.failed::before {
+  background: #EF4444 !important;
+  border-color: #EF4444 !important;
+}
+
+/* Atmospheric Sunlit Glows */
+html[data-theme="light"] .glow-1 {
+  background: radial-gradient(circle, rgba(217, 119, 6, 0.18) 0%, rgba(245, 242, 235, 0) 70%) !important;
+}
+html[data-theme="light"] .glow-2 {
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.12) 0%, rgba(245, 242, 235, 0) 70%) !important;
+}
+
+/* Modals & Dialogs in Light Mode */
+html[data-theme="light"] .modal-overlay {
+  background: rgba(28, 25, 23, 0.55) !important;
+  backdrop-filter: blur(12px) !important;
+}
+html[data-theme="light"] .modal-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(192, 106, 10, 0.30) !important;
+  box-shadow: 0 24px 64px -12px rgba(68, 48, 20, 0.25) !important;
+  color: #1C1917 !important;
+}
+html[data-theme="light"] .modal-header {
+  background: #FCFAF6 !important;
+  border-bottom: 1px solid #E7E0D3 !important;
+}
+html[data-theme="light"] .modal-footer {
+  background: #FCFAF6 !important;
+  border-top: 1px solid #E7E0D3 !important;
+}
+html[data-theme="light"] .api-info-callout {
+  background: #EFF6FF !important;
+  border: 1.5px solid #BFDBFE !important;
+}
+html[data-theme="light"] .api-callout-text {
+  color: #1E3A8A !important;
+  font-weight: 500 !important;
+}
+html[data-theme="light"] .api-callout-text strong {
+  color: #172554 !important;
+  font-weight: 700 !important;
+}
+html[data-theme="light"] .modal-input,
+html[data-theme="light"] .modal-textarea {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #1C1917 !important;
+  font-size: 14px !important;
+}
+html[data-theme="light"] .modal-input::placeholder {
+  color: #94A3B8 !important;
+}
+html[data-theme="light"] .rubric-criterion {
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #1E293B !important;
+}
+html[data-theme="light"] .rubric-name {
+  color: #1E293B !important;
+  font-weight: 600 !important;
+}
+html[data-theme="light"] .rubric-pts {
+  color: #B45309 !important;
+  font-weight: 700 !important;
+}
+
+
+
+

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Career PathFinder — a grounded, adaptive, and explainable AI engine that measures your skills, computes the labour-market gap, and sequences a prerequisite-correct learning path.">
+<meta name="theme-color" content="#0A0D12">
+<meta property="og:title" content="Career PathFinder — AI Learning Path Engine">
+<meta property="og:description" content="Grounded, adaptive, explainable. The engine decides the path; the model only phrases it.">
+<meta property="og:type" content="website">
+<title>Career PathFinder — AI-Powered Personalized Learning Path Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<!-- RESKIN: editorial display serif -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.ico">
+<link rel="stylesheet" href="/static/style.css?v=3.2">
+<!-- RESKIN: presentational overlay (remove this line + the Fraunces link above for the un-reskinned build) -->
+<link rel="stylesheet" href="/static/reskin.css?v=3.2">
+<!-- Three.js 3D Engine -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<!-- WebGL Interactive 3D Background Canvas -->
+<canvas id="canvas-3d" aria-hidden="true"></canvas>
+
+<div class="atmospheric-glow glow-1" aria-hidden="true"></div>
+<div class="atmospheric-glow glow-2" aria-hidden="true"></div>
+
+<div class="app-layout">
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-3d-orb" aria-hidden="true"></div>
+      <div>
+        <h1 class="brand-title">Career <span>PathFinder</span></h1>
+        <p class="brand-sub">Grounded · Adaptive · Explainable 3D Engine</p>
+      </div>
+    </div>
+    <div class="header-status">
+      <button id="btn-view-graph" class="btn-ghost btn-sm"><span class="material-symbols-outlined text-[13px]">hub</span> Explore Skill DAG (53 Nodes)</button>
+      <button id="btn-api-settings" class="btn-ghost btn-sm" onclick="openApiModal()" title="Configure Custom Gemini API Key for Judges/Testers">🔑 <span id="api-status-label">API Key</span></button>
+      <button id="btn-theme-toggle" class="btn-ghost btn-sm" onclick="toggleTheme()" title="Toggle Light / Dark Mode" aria-label="Toggle Light / Dark Mode"><span id="theme-toggle-icon">☀️</span> <span id="theme-toggle-label">Light</span></button>
+      <span class="engine-pill"><span class="pulse-dot"></span> BKT 3D Engine Active</span>
+      <span class="engine-pill"><span class="material-symbols-outlined text-[13px]">database</span> O*NET Grounded</span>
+      <button id="btn-reset" class="btn-ghost btn-sm">↺ New Session</button>
+    </div>
+  </header>
+
+  <!-- Main Content Stage -->
+  <main id="main-content" class="main-stage" role="main">
+    
+    <!-- Stage 1: Conversational Goal Intake & Preferences -->
+    <section id="view-intake" class="stage-view active">
+      <div class="intake-container">
+        <div class="intake-badge">HCL AMPLIFIED · AI LEARNING PATH RECOMMENDER</div>
+        <h2 class="hero-headline">Where do you want your career to go?</h2>
+        <p class="hero-sub">Describe your career ambition in natural language. Our engine measures your verified competencies, computes the O*NET labor-market gap, and sequences an adaptive prerequisite roadmap.</p>
+        
+        <div class="intake-card">
+          <div class="input-group">
+            <label for="goal-input" class="input-label">YOUR CAREER OBJECTIVE</label>
+            <div class="textarea-wrapper">
+              <textarea id="goal-input" rows="3" placeholder="e.g. Commerce graduate wanting to become a Data Scientist in 6 months, already know basic Python and SQL..."></textarea>
+              <div class="input-chips">
+                <span class="chip-example" data-text="I want to become a Data Scientist focusing on predictive ML, statistical modeling, and deep learning">Data Scientist</span>
+                <span class="chip-example" data-text="Become a Data Analyst mastering SQL, Pandas, Tableau BI dashboards, and exploratory analytics">Data Analyst</span>
+                <span class="chip-example" data-text="Transition into a Full Stack Developer building scalable web apps with React, Node.js, and TypeScript">Full Stack Developer</span>
+                <span class="chip-example" data-text="Become a Software Developer building backend systems, data structures, algorithms, and microservices">Software Developer</span>
+                <span class="chip-example" data-text="Become a UX Designer conducting user research, wireframing, and building Figma design systems">UX Designer</span>
+                <span class="chip-example" data-text="Master Machine Learning Engineering, deep learning neural networks, and cloud MLOps deployment">ML Engineer</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="preferences-grid">
+            <div class="pref-item">
+              <label class="pref-label">WEEKLY COMMITMENT</label>
+              <select id="pref-hours">
+                <option value="5">5 hrs/week (Casual)</option>
+                <option value="10" selected>10 hrs/week (Recommended)</option>
+                <option value="20">20 hrs/week (Intensive)</option>
+                <option value="35">35 hrs/week (Full-Time)</option>
+              </select>
+            </div>
+            <div class="pref-item">
+              <label class="pref-label">EXPERIENCE LEVEL</label>
+              <select id="pref-level">
+                <option value="beginner" selected>Beginner (Foundational)</option>
+                <option value="intermediate">Intermediate (Practitioner)</option>
+                <option value="advanced">Advanced (Deepening)</option>
+              </select>
+            </div>
+            <div class="pref-item">
+              <label class="pref-label">LEARNING FORMAT</label>
+              <select id="pref-format">
+                <option value="interactive" selected>Interactive & Hands-on</option>
+                <option value="video">Video Lecture Series</option>
+                <option value="project-heavy">Project-Heavy Capstones</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="btn-intake-submit" class="btn-primary btn-block">
+            <span>Analyze Role & Launch Diagnostic</span> →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stage 2: Adaptive Bayesian Diagnostic (BKT) -->
+    <section id="view-diagnostic" class="stage-view">
+      <div class="diagnostic-container">
+        <div class="diag-header">
+          <div>
+            <span class="kicker">COGNITIVE MEASUREMENT</span>
+            <h2 id="diag-role-title">Calibrating Knowledge Baseline</h2>
+            <p class="muted">Bayesian Knowledge Tracing (BKT) dynamically estimates your prior mastery rather than trusting self-reported claims.</p>
+          </div>
+          <div class="diag-progress-badge">
+            <span id="diag-step-counter">Skill 1 of 4</span>
+          </div>
+        </div>
+
+        <div class="diagnostic-card">
+          <div class="diag-skill-banner">
+            <div>
+              <span class="tag">TARGET COMPETENCY</span>
+              <h3 id="diag-skill-name">Python Fundamentals</h3>
+            </div>
+            <div class="mastery-indicator">
+              <span class="mastery-lbl">ESTIMATED MASTERY</span>
+              <span id="diag-mastery-val" class="mastery-pct">20%</span>
+            </div>
+          </div>
+
+          <div id="diag-question-box" class="question-box">
+            <p id="diag-question-text" class="question-text">Loading question...</p>
+            <div id="diag-options-list" class="options-list"></div>
+          </div>
+
+          <div id="diag-feedback" class="feedback-banner hidden" role="status" aria-live="polite">
+            <div id="diag-feedback-icon" class="fb-icon">✓</div>
+            <div class="fb-content">
+              <h4 id="diag-feedback-title">Correct!</h4>
+              <p id="diag-feedback-msg">BKT posterior updated.</p>
+            </div>
+          </div>
+
+          <div class="diag-actions">
+            <button id="btn-diag-skip" class="btn-ghost">Skip Diagnostic → Plan Immediately</button>
+            <button id="btn-diag-next" class="btn-primary hidden">Next Assessment Step →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stage 3: The Roadmap Dashboard -->
+    <section id="view-dashboard" class="stage-view">
+      <div class="dashboard-layout">
+        
+        <!-- Left: Journey Path & Milestones -->
+        <div class="journey-column">
+          <div class="journey-header">
+            <div>
+              <span class="kicker">PERSONALIZED LEARNING JOURNEY</span>
+              <h2 id="dash-role-title">Data Scientist Roadmap</h2>
+              <p id="dash-timeline-info" class="muted">14 steps · 18 weeks estimated at 10 hrs/week</p>
+            </div>
+            <div class="journey-actions">
+              <button id="btn-export-roadmap" class="btn-ghost btn-sm">📥 Export Roadmap (.MD / PDF)</button>
+              <button id="btn-replan-all" class="btn-ghost btn-sm">↺ Re-compute Path</button>
+            </div>
+          </div>
+
+          <!-- Vertical Journey Sequence -->
+          <div id="journey-nodes-container" class="nodes-stream">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Right: Glass-Box Explainability, Metrics & AI Coach -->
+        <div class="sidebar-column">
+          
+          <!-- Readiness & Summary Card -->
+          <div class="side-card metrics-card tilt-3d">
+            <h3 class="side-card-title">Role Readiness Hologram</h3>
+            <div class="readiness-gauge">
+              <div class="gauge-ring-3d">
+                <div class="orbit-ring orbit-1"></div>
+                <div class="orbit-ring orbit-2"></div>
+                <span id="metric-readiness-pct" class="gauge-value">0%</span>
+              </div>
+              <div class="gauge-meta">
+                <p id="metric-skills-count" class="gauge-detail">0 of 14 skills mastered</p>
+                <p id="metric-hours-total" class="gauge-detail">140 total learning hours</p>
+                <span class="chip on">Quantum BKT Vector</span>
+              </div>
+            </div>
+            <div class="readiness-bar-bg">
+              <div id="readiness-fill" class="readiness-bar-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Glass-Box Reasoning Inspector -->
+          <div class="side-card explain-card tilt-3d">
+            <div class="explain-card-header">
+              <h3 class="side-card-title">🔍 Glass-Box Trace Inspector</h3>
+              <span class="chip on">Deterministic</span>
+            </div>
+            <p class="explain-intro">Select any milestone node on the left to inspect its complete mathematical & labor-market justification.</p>
+            <div id="inspector-content" class="inspector-box">
+              <div class="inspector-placeholder">Click any "Inspect Trace" button on a step to see the reasoning breakdown.</div>
+            </div>
+          </div>
+
+          <!-- Grounded AI Career Coach (Multi-Agent Guild & Voice Enabled) -->
+          <div class="side-card chat-card tilt-3d">
+            <div class="coach-header-3d">
+              <div class="coach-avatar-3d" id="coach-avatar-icon">🤖</div>
+              <div style="flex-grow: 1;">
+                <h3 class="side-card-title mb-0" id="coach-title-label">AI Learning Coach</h3>
+                <p class="muted font-11"><span class="pulse-dot-mini"></span> Active Context Grounding</p>
+              </div>
+              <button id="btn-clear-chat" class="btn-ghost-icon" title="Clear conversation" aria-label="Clear conversation">↺</button>
+            </div>
+
+            <!-- Multi-Agent Guild Persona Selector -->
+            <div class="persona-selector-bar">
+              <button type="button" class="persona-chip active" data-persona="general" title="General Roadmap Navigation & Explainable AI">🎓 Coach</button>
+              <button type="button" class="persona-chip" data-persona="algo_specialist" title="Algorithms, Data Structures & CS Rigor">⚡ Algo</button>
+              <button type="button" class="persona-chip" data-persona="system_architect" title="System Architecture & Cloud Engineering">🏗️ Architect</button>
+              <button type="button" class="persona-chip" data-persona="career_strategist" title="Resume, STAR Interviewing & Portfolio Strategy">💼 Career</button>
+            </div>
+            
+            <div id="chat-messages" class="chat-stream" aria-live="polite" aria-atomic="false">
+              <div class="chat-msg bot">
+                <p>👋 <strong>Welcome!</strong> I'm your multi-agent AI Learning Coach. Select a mentor persona above or ask any custom question about your learning roadmap.</p>
+                <p style="margin-top: 6px;" class="muted font-12">Click a quick topic below, ask for a visual architecture diagram, or tap 🎙️ to speak.</p>
+              </div>
+            </div>
+
+            <!-- Quick Coach Suggestion Chips -->
+            <div class="coach-quick-chips">
+              <button type="button" class="quick-chip" data-prompt="What capstone project should I build first and why?">🛠️ First Project</button>
+              <button type="button" class="quick-chip" data-prompt="How long will it take me to get job-ready at my current pace?">⏱️ Timeline</button>
+              <button type="button" class="quick-chip" data-prompt="Draw a visual Mermaid system architecture diagram for my target role.">📊 Architecture Diagram</button>
+              <button type="button" class="quick-chip" id="btn-micro-challenge" data-action="micro-challenge">⚡ 60s Micro-Challenge</button>
+            </div>
+
+            <form id="chat-form" class="chat-input-bar">
+              <button type="button" id="btn-voice-input" class="btn-voice" title="Voice Input (Click to Speak)" aria-label="Voice Input">🎙️</button>
+              <button type="button" id="btn-voice-toggle" class="btn-voice" title="Read Responses Aloud (Toggle TTS)" aria-label="Toggle Text-to-Speech">🔊</button>
+              <input id="chat-input" type="text" placeholder="Ask coach or tap 🎙️ to speak..." autocomplete="off">
+              <button type="submit" class="btn-send" title="Send message" aria-label="Send message">➤</button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Interactive Skill DAG Graph Explorer Modal -->
+<div id="modal-graph-viewer" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="graph-modal-title">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">GRAPH TOPOLOGY EXPLORER</span>
+        <h3 id="graph-modal-title" class="modal-title">Complete 53-Skill Prerequisite Directed Acyclic Graph</h3>
+        <p class="muted font-12">NetworkX Topological Sort Engine with 61 directed prerequisite constraints</p>
+      </div>
+      <button id="btn-close-graph" class="btn-ghost btn-sm">✕ Close</button>
+    </div>
+    
+    <div class="graph-legend">
+      <div class="legend-items-group">
+        <span class="legend-item"><span class="legend-dot active-node"></span> Active Career Path</span>
+        <span class="legend-item"><span class="legend-dot mastered-node"></span> Mastered / Known</span>
+        <span class="legend-item"><span class="legend-dot target-node"></span> Target Role Skill</span>
+        <span class="legend-item"><span class="legend-dot default-node"></span> Other DAG Competency</span>
+      </div>
+      <div class="graph-filter-chips">
+        <button class="graph-filter-btn active" data-filter="all">All Clusters (53)</button>
+        <button class="graph-filter-btn" data-filter="programming">Programming</button>
+        <button class="graph-filter-btn" data-filter="data">Data & Stats</button>
+        <button class="graph-filter-btn" data-filter="ml">ML & AI</button>
+        <button class="graph-filter-btn" data-filter="ui_ux">UI/UX Design</button>
+      </div>
+    </div>
+
+    <div class="graph-canvas-wrapper">
+      <svg id="svg-dag-graph" width="100%" height="480" viewBox="0 0 1100 520"></svg>
+    </div>
+
+    <div id="graph-node-details" class="graph-inspector-banner">
+      <span class="font-12 muted">Hover or click any skill node in the graph to inspect its difficulty, cluster, and directed prerequisites.</span>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive Capstone Submission & Rubric Evaluation Modal -->
+<div id="modal-capstone-evaluator" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="capstone-modal-skill-title">
+  <div class="modal-card modal-capstone-card">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">MILESTONE COMPETENCY VERIFICATION</span>
+        <h3 id="capstone-modal-skill-title" class="modal-title">Submit Capstone: Python Fundamentals</h3>
+        <p class="muted font-12">Structured 4-Point Self-Assessment Rubric</p>
+      </div>
+      <button id="btn-close-capstone" class="btn-ghost btn-sm" onclick="closeCapstoneModal()">✕ Close</button>
+    </div>
+    
+    <div class="capstone-modal-body">
+      <!-- Project Specs -->
+      <div class="capstone-spec-box">
+        <div class="capstone-spec-header">
+          <span id="capstone-spec-badge" class="chip on">Outcome-Based Capstone</span>
+          <span id="capstone-spec-effort" class="muted font-12">Estimated Effort: ~10 Hours</span>
+        </div>
+        <h4 id="capstone-spec-title" class="capstone-project-name">CLI Task Management Engine</h4>
+        <p id="capstone-spec-obj" class="capstone-project-desc">Build a modular command-line task manager with persistent SQLite storage and unit tests.</p>
+        
+        <div class="deliverables-section">
+          <label class="input-label mb-1">COMPLETED DELIVERABLES CHECKLIST</label>
+          <div id="capstone-deliverables-checklist" class="deliverables-checklist">
+            <!-- Dynamic checkboxes -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Submission Form -->
+      <div class="capstone-form-box">
+        <div class="input-group mb-3">
+          <label for="capstone-repo-url" class="input-label">PROJECT REPOSITORY URL (GITHUB / GITLAB)</label>
+          <input id="capstone-repo-url" type="url" class="modal-input" value="https://github.com/learner/capstone-submission" placeholder="https://github.com/your-username/repo-name">
+        </div>
+
+        <div class="input-group mb-3">
+          <label for="capstone-notes" class="input-label">ARCHITECTURAL NOTES & TEST COVERAGE SUMMARY</label>
+          <textarea id="capstone-notes" rows="3" class="modal-textarea" placeholder="Describe your architecture design, unit tests implemented (e.g. pytest), and design patterns used...">Implemented modular architecture with clean separation of concerns, comprehensive pytest suite with 100% test coverage, and Dockerized deployment pipeline.</textarea>
+        </div>
+
+        <!-- Rubric Preview Breakdown -->
+        <div class="rubric-preview-grid">
+          <div class="rubric-criterion">
+            <span class="rubric-name">🏗️ Modular Architecture</span>
+            <span class="rubric-pts">25 Pts</span>
+          </div>
+          <div class="rubric-criterion">
+            <span class="rubric-name">🧪 Unit Tests & Coverage</span>
+            <span class="rubric-pts">25 Pts</span>
+          </div>
+          <div class="rubric-criterion">
+            <span class="rubric-name">📦 Repo Deliverables</span>
+            <span class="rubric-pts">25 Pts</span>
+          </div>
+          <div class="rubric-criterion">
+            <span class="rubric-name">✅ Deliverables Checklist</span>
+            <span class="rubric-pts">25 Pts</span>
+          </div>
+        </div>
+
+        <!-- Evaluation Feedback Area (hidden initially) -->
+        <div id="capstone-eval-result" class="eval-result-card hidden">
+          <div class="eval-result-header">
+            <div id="eval-result-badge" class="chip on">✓ Self-Assessment Passed</div>
+            <span id="eval-result-score" class="rubric-score-badge">95 / 100</span>
+          </div>
+          <p id="eval-result-feedback" class="eval-result-text">Automated evaluation score: 95/100. Verified mastery awarded for this competency.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeCapstoneModal()">Cancel</button>
+      <button id="btn-submit-capstone-action" class="btn-primary" onclick="submitCapstoneEvaluation()">
+        <span>⚡ Run Self-Assessment</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Export Roadmap Options Modal -->
+<div id="modal-export-roadmap" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="export-modal-title">
+  <div class="modal-card modal-export-card" style="max-width: 500px;">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">EXPORT SYLLABUS & CURRICULUM</span>
+        <h3 id="export-modal-title" class="modal-title">Export Personalized Roadmap</h3>
+        <p class="muted font-12">Choose your preferred export format for offline learning</p>
+      </div>
+      <button id="btn-close-export" class="btn-ghost btn-sm" onclick="closeExportModal()">✕ Close</button>
+    </div>
+    <div class="export-modal-body" style="display: flex; flex-direction: column; gap: 12px; margin: 20px 0;">
+      <button id="btn-action-export-pdf" class="btn-primary" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; text-align: left; cursor: pointer;">
+        <div>
+          <strong style="display: block; font-size: 14px;">📄 Save as PDF / Print Syllabus</strong>
+          <span style="font-size: 12px; opacity: 0.85;">Formatted clean multi-page document with full milestones & projects</span>
+        </div>
+        <span style="font-size: 20px;">→</span>
+      </button>
+
+      <button id="btn-action-export-md" class="btn-ghost" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; text-align: left; border: 1px solid var(--border-color, rgba(255,255,255,0.15)); cursor: pointer;">
+        <div>
+          <strong style="display: block; font-size: 14px;">📝 Download Markdown (.md)</strong>
+          <span style="font-size: 12px; color: var(--muted, #94a3b8);">Plaintext syllabus for Obsidian, Notion, or GitHub</span>
+        </div>
+        <span style="font-size: 20px;">↓</span>
+      </button>
+
+      <button id="btn-action-export-json" class="btn-ghost" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; text-align: left; border: 1px solid var(--border-color, rgba(255,255,255,0.15)); cursor: pointer;">
+        <div>
+          <strong style="display: block; font-size: 14px;">💾 Export JSON Data (.json)</strong>
+          <span style="font-size: 12px; color: var(--muted, #94a3b8);">Structured API data with DAG nodes and traces</span>
+        </div>
+        <span style="font-size: 20px;">↓</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Judge / Evaluator API Key Override Modal -->
+<div id="modal-api-settings" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="api-modal-title">
+  <div class="modal-card modal-export-card" style="max-width: 520px;">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">EVALUATOR & JUDGE SETTINGS</span>
+        <h3 id="api-modal-title" class="modal-title">Gemini API Key Configuration</h3>
+        <p class="muted font-12">Override or inspect LLM conversational engine access</p>
+      </div>
+      <button id="btn-close-api-modal" class="btn-ghost btn-sm" onclick="closeApiModal()">✕ Close</button>
+    </div>
+    
+    <div class="modal-body" style="padding: 18px 24px; display: flex; flex-direction: column; gap: 14px;">
+      <div class="api-info-callout" style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 8px; padding: 12px 14px;">
+        <p class="font-12 api-callout-text" style="margin: 0; line-height: 1.5;">
+          <strong>💡 How Key Resolution Works:</strong><br>
+          1. <strong>Custom Key (Below):</strong> Highest priority if entered here. Stored in your session memory only (never written to disk).<br>
+          2. <strong>Project Default Key (.env):</strong> Active automatically if no key is entered here.<br>
+          3. <strong>Deterministic Fallback:</strong> If neither is available, 100% of core algorithms (DAG, BKT, Gap Analysis) function with zero crashes.
+        </p>
+      </div>
+
+      <div class="input-group">
+        <label for="input-judge-api-key" class="input-label">CUSTOM GEMINI API KEY (OPTIONAL)</label>
+        <input id="input-judge-api-key" type="password" class="modal-input" placeholder="AIzaSy..." style="width: 100%; box-sizing: border-box;">
+        <p class="font-11 muted" style="margin-top: 5px;">Get a free key from <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--accent, #38bdf8); text-decoration: underline;">Google AI Studio</a>.</p>
+      </div>
+
+      <div id="api-key-active-status" class="chip on" style="width: fit-content;">
+        ✓ Default Project Key Active
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-ghost btn-sm" id="btn-clear-judge-key" onclick="clearJudgeKey()">Clear Override</button>
+      <button class="btn-primary btn-sm" id="btn-save-judge-key" onclick="saveJudgeKey()">Save & Use Key</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script src="/static/three-scene.js?v=3.2"></script>
+<script src="/static/app.js?v=3.2"></script>
+</body>
+</html>
