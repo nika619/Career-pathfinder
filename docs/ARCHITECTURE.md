@@ -284,8 +284,9 @@ docker-compose up --build
 ---
 
 ## 10. Engineering Team & Institutional Attribution
-👥 **Team:** **Mayank Tiwari** *(Lead)*, **Shubh Yadav**, **Uma Jaiswal** — **HCLTech AMPlified S1, Round 2**  
+👥 **Team:** **Mayank Tiwari** (Leader), **Shubh Yadav** (Member), **Uma Jaiswal** (Member) — **HCLTech AMPlified S1, Round 2**  
 **Team Name:** **LODESTAR** | **Institution:** **Babu Banarasi Das University** (B.Tech 2023–2027)
+
 
 
 
