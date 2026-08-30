@@ -319,15 +319,17 @@ career-pathfinder/
 
 ---
 
-## 👥 Team LODESTAR
+## 👥 Engineering Team & Attribution
 
-Built and submitted by **Team LODESTAR** from **Babu Banarasi Das University** (B.Tech 2023–2027) for the **HCLTech AMPlified National Hackathon**:
+**Team:** **Mayank Tiwari** *(Lead)*, **Shubh Yadav**, **Uma Jaiswal** — **HCLTech AMPlified S1, Round 2**  
+**Team Name:** **LODESTAR** | **Institution:** **Babu Banarasi Das University** (B.Tech 2023–2027)
 
 | Member | Role | Core Contributions & Systems Ownership |
 | :--- | :--- | :--- |
-| **Mayank** *(Team Leader)* | **Lead AI & System Architect** | End-to-end system architecture, DAG topological sorting engine (Kahn's algorithm), Bayesian Knowledge Tracing (BKT) student model, dense semantic embedding pipeline, and OWASP security hardening. |
-| **Shubh Yadav** | **Full-Stack & Backend Systems Engineer** | FastAPI REST service architecture, dynamic adaptive re-planning engine, SQLite WAL session persistence, milestone rubric evaluator, and end-to-end integration test suite. |
-| **Uma Jaiswal** | **Frontend & Empirical Evaluation Lead** | Dark editorial UI/UX dashboard ("Cartographer's Observatory"), Three.js ambient observatory, interactive SVG DAG explorer, and 1,000-learner Monte Carlo empirical benchmark suite. |
+| **Mayank Tiwari** *(Team Leader)* | **Lead AI & System Architect** | **Primary Technical Ownership & Architecture:** Designed the entire end-to-end system paradigm; authored the 53-node DAG topological sorting engine (Kahn's algorithm with multi-key tie-breaking); formulated the Corbett–Anderson Bayesian Knowledge Tracing (BKT) cognitive student model; engineered the offline MiniLM dense semantic embedding pipeline (MRS); designed the Glass-Box trace inspector; and implemented OWASP enterprise security hardening. |
+| **Shubh Yadav** | **Full-Stack & Backend Systems Engineer** | Implemented FastAPI REST service endpoints, dynamic adaptive re-planning engine, SQLite WAL session persistence layer, milestone capstone rubric evaluator, and end-to-end integration test suite. |
+| **Uma Jaiswal** | **Frontend & Empirical Evaluation Lead** | Built dark editorial UI/UX dashboard ("Cartographer's Observatory"), Three.js ambient visual observatory, interactive SVG DAG explorer, and executed the 1,000-learner Monte Carlo empirical benchmark suite. |
+
 
 ---
 
