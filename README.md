@@ -1,8 +1,9 @@
 # 🧭 Career PathFinder
 
 > **Grounded, Adaptive & Explainable AI Learning Path Engine**  
-> *Autonomous Prerequisite Graph Orchestration & Bayesian Cognitive Modeling*
+> *Built & Engineered for the **HCL Amplified National Hackathon***
 
+[![HCL Amplified](https://img.shields.io/badge/HCL%20Amplified-National%20Hackathon%20Submission-E11D48.svg)](https://github.com/nika619/Career-pathfinder-nika619)
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.141.1-009688.svg)](https://fastapi.tiangolo.com/)
 [![Tests](https://img.shields.io/badge/Tests-54%2F54%20Passing%20(100%25)-brightgreen.svg)](tests/)
@@ -294,6 +295,16 @@ career-pathfinder/
 ├── Dockerfile                   # Multi-stage production container definition
 └── docker-compose.yml           # Local containerized orchestration
 ```
+
+---
+
+## 🏆 Hackathon Showcase & Mission
+Developed and submitted for the **HCL Amplified National Hackathon — AI-Powered Personalized Learning Path Challenge**.
+
+Career PathFinder addresses the core theme of the challenge by moving beyond superficial course aggregation:
+- **Zero Prerequisite Inversions**: Guaranteed via Kahn's Topological Sort over an induced DAG.
+- **Real Student Competency Modeling**: Dynamic Bayesian Knowledge Tracing replacing unreliable self-reported surveys.
+- **Empirical Grounding**: Labour-market weights anchored in O\*NET data and real courses retrieved via dense vector similarity.
 
 ---
 
