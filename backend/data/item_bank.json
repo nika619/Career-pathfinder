@@ -1,0 +1,249 @@
+{
+  "python_basics": [
+    {"q": "What is the output of `len([1, [2, 3], 4])`?", "options": ["3", "4", "5", "Error"], "answer": "3", "difficulty": 1},
+    {"q": "Which keyword is used to define a function in Python?", "options": ["func", "define", "def", "function"], "answer": "def", "difficulty": 1},
+    {"q": "What does `'hello'[1:3]` return?", "options": ["'hel'", "'el'", "'ell'", "'he'"], "answer": "'el'", "difficulty": 2},
+    {"q": "What is the output of `type(3.14)`?", "options": ["<class 'int'>", "<class 'float'>", "<class 'double'>", "<class 'decimal'>"], "answer": "<class 'float'>", "difficulty": 1},
+    {"q": "Which of these is a mutable data type in Python?", "options": ["tuple", "string", "list", "frozenset"], "answer": "list", "difficulty": 2}
+  ],
+  "numpy": [
+    {"q": "What does `np.zeros((3,2))` create?", "options": ["3x2 array of zeros", "2x3 array of zeros", "Array [0,0,0,0,0]", "Error"], "answer": "3x2 array of zeros", "difficulty": 1},
+    {"q": "What is broadcasting in NumPy?", "options": ["Sending arrays over network", "Automatic shape alignment for operations", "Converting arrays to lists", "Parallel processing"], "answer": "Automatic shape alignment for operations", "difficulty": 2},
+    {"q": "What does `np.dot(A, B)` compute?", "options": ["Element-wise product", "Matrix multiplication", "Cross product", "Concatenation"], "answer": "Matrix multiplication", "difficulty": 2}
+  ],
+  "pandas": [
+    {"q": "How do you select a column 'name' from a DataFrame `df`?", "options": ["df.name", "df['name']", "Both work", "df.get('name')"], "answer": "Both work", "difficulty": 1},
+    {"q": "What does `df.groupby('city').mean()` do?", "options": ["Groups by city and calculates mean of numeric columns", "Sorts by city", "Filters cities by mean", "Creates new DataFrame"], "answer": "Groups by city and calculates mean of numeric columns", "difficulty": 2},
+    {"q": "Which method handles missing values by replacing with a specific value?", "options": ["dropna()", "fillna()", "isna()", "notna()"], "answer": "fillna()", "difficulty": 1},
+    {"q": "What does `pd.merge(df1, df2, on='id')` perform?", "options": ["Concatenation", "SQL-style join", "Union", "Intersection"], "answer": "SQL-style join", "difficulty": 2}
+  ],
+  "sql": [
+    {"q": "Which SQL clause is used to filter groups?", "options": ["WHERE", "HAVING", "FILTER", "GROUP BY"], "answer": "HAVING", "difficulty": 2},
+    {"q": "What type of JOIN returns all rows from both tables?", "options": ["INNER JOIN", "LEFT JOIN", "FULL OUTER JOIN", "CROSS JOIN"], "answer": "FULL OUTER JOIN", "difficulty": 2},
+    {"q": "What does `SELECT COUNT(DISTINCT city) FROM users` return?", "options": ["Total rows", "Number of unique cities", "All city names", "Error"], "answer": "Number of unique cities", "difficulty": 1},
+    {"q": "Which window function assigns a rank with gaps?", "options": ["ROW_NUMBER()", "RANK()", "DENSE_RANK()", "NTILE()"], "answer": "RANK()", "difficulty": 3}
+  ],
+  "statistics": [
+    {"q": "What does a p-value of 0.03 mean in hypothesis testing?", "options": ["3% chance the null hypothesis is true", "3% probability of observing this result if null is true", "97% confidence", "3% error rate"], "answer": "3% probability of observing this result if null is true", "difficulty": 2},
+    {"q": "What is the Central Limit Theorem about?", "options": ["All data is normal", "Sample means approach normal distribution as n increases", "Median equals mean", "Variance decreases with sample size"], "answer": "Sample means approach normal distribution as n increases", "difficulty": 2},
+    {"q": "Which measure of central tendency is most robust to outliers?", "options": ["Mean", "Median", "Mode", "Range"], "answer": "Median", "difficulty": 1},
+    {"q": "What does a correlation coefficient of -0.85 indicate?", "options": ["Weak positive", "Strong negative", "No relationship", "Perfect negative"], "answer": "Strong negative", "difficulty": 1}
+  ],
+  "ml_foundations": [
+    {"q": "What is the bias-variance tradeoff?", "options": ["Training speed vs accuracy", "Underfitting vs overfitting balance", "Data size vs model size", "CPU vs GPU usage"], "answer": "Underfitting vs overfitting balance", "difficulty": 2},
+    {"q": "What is cross-validation used for?", "options": ["Feature selection", "Estimating model generalization", "Data cleaning", "Hyperparameter tuning only"], "answer": "Estimating model generalization", "difficulty": 2},
+    {"q": "Which is a supervised learning task?", "options": ["Clustering", "Dimensionality reduction", "Classification", "Anomaly detection"], "answer": "Classification", "difficulty": 1},
+    {"q": "What is overfitting?", "options": ["Model is too simple", "Model memorizes training data but fails on new data", "Model has high bias", "Model trains too slowly"], "answer": "Model memorizes training data but fails on new data", "difficulty": 1}
+  ],
+  "supervised_learning": [
+    {"q": "Which algorithm is used for both classification and regression?", "options": ["Logistic Regression", "Random Forest", "Naive Bayes", "K-Nearest Neighbors"], "answer": "Random Forest", "difficulty": 2},
+    {"q": "What does regularization prevent?", "options": ["Underfitting", "Overfitting", "Slow training", "Data leakage"], "answer": "Overfitting", "difficulty": 1},
+    {"q": "In logistic regression, what function maps predictions to probabilities?", "options": ["ReLU", "Sigmoid", "Tanh", "Softmax"], "answer": "Sigmoid", "difficulty": 2}
+  ],
+  "unsupervised_learning": [
+    {"q": "What metric is commonly used to evaluate cluster quality without ground truth?", "options": ["Accuracy", "Silhouette Score", "Mean Squared Error", "Precision"], "answer": "Silhouette Score", "difficulty": 2},
+    {"q": "In K-Means clustering, what does 'K' represent?", "options": ["Number of features", "Number of clusters to create", "Number of iterations", "Learning rate"], "answer": "Number of clusters to create", "difficulty": 1},
+    {"q": "What is PCA primarily used for in unsupervised learning?", "options": ["Dimensionality reduction", "Classification", "Regression", "Data augmentation"], "answer": "Dimensionality reduction", "difficulty": 2}
+  ],
+  "deep_learning": [
+    {"q": "What is backpropagation?", "options": ["Forward pass through network", "Algorithm to compute gradients for weight updates", "Data augmentation technique", "Regularization method"], "answer": "Algorithm to compute gradients for weight updates", "difficulty": 2},
+    {"q": "Which layer type is primarily used for image recognition?", "options": ["Dense/Fully Connected", "Convolutional", "Recurrent", "Embedding"], "answer": "Convolutional", "difficulty": 1},
+    {"q": "What does dropout do during training?", "options": ["Removes data points", "Randomly deactivates neurons", "Reduces learning rate", "Prunes the network"], "answer": "Randomly deactivates neurons", "difficulty": 2}
+  ],
+  "linear_algebra": [
+    {"q": "What is an eigenvalue?", "options": ["Matrix determinant", "Scalar that scales eigenvector under transformation", "Matrix inverse", "Trace of matrix"], "answer": "Scalar that scales eigenvector under transformation", "difficulty": 3},
+    {"q": "What does SVD stand for?", "options": ["Standard Value Decomposition", "Singular Value Decomposition", "Simple Vector Decomposition", "Scaled Variance Distribution"], "answer": "Singular Value Decomposition", "difficulty": 2},
+    {"q": "What is the dot product of orthogonal vectors?", "options": ["1", "0", "-1", "Undefined"], "answer": "0", "difficulty": 2}
+  ],
+  "data_cleaning": [
+    {"q": "What is an outlier in a dataset?", "options": ["A missing value", "A data point significantly distant from other observations", "A duplicated row", "A categorical feature"], "answer": "A data point significantly distant from other observations", "difficulty": 1},
+    {"q": "Which method is commonly used to detect outliers in normally distributed data?", "options": ["Z-score (>= 3 standard deviations)", "Alphabetical sorting", "Count distinct", "String length"], "answer": "Z-score (>= 3 standard deviations)", "difficulty": 2},
+    {"q": "What does One-Hot Encoding do?", "options": ["Normalizes numeric ranges", "Converts categorical variables into binary indicator columns", "Fills missing values", "Scales data between 0 and 1"], "answer": "Converts categorical variables into binary indicator columns", "difficulty": 2}
+  ],
+  "feature_engineering": [
+    {"q": "Why should feature scaling be fit ONLY on training data and not the full dataset?", "options": ["To save computation", "To prevent data leakage from the test set", "It doesn't matter", "To reduce memory usage"], "answer": "To prevent data leakage from the test set", "difficulty": 2},
+    {"q": "What is target encoding?", "options": ["Encoding based on target variable mean", "One-hot encoding", "Label encoding", "Frequency encoding"], "answer": "Encoding based on target variable mean", "difficulty": 3},
+    {"q": "What does mutual information measure between a feature and target?", "options": ["Linear correlation only", "Linear and non-linear dependency", "Variance", "Standard error"], "answer": "Linear and non-linear dependency", "difficulty": 2}
+  ],
+  "model_evaluation": [
+    {"q": "When dealing with severe class imbalance (e.g. 99% negative), which metric is LEAST informative?", "options": ["Accuracy", "ROC-AUC", "F1-Score", "Precision-Recall AUC"], "answer": "Accuracy", "difficulty": 2},
+    {"q": "What is the harmonic mean of Precision and Recall?", "options": ["ROC-AUC", "F1-Score", "Accuracy", "Specificity"], "answer": "F1-Score", "difficulty": 1},
+    {"q": "What is K-Fold Cross-Validation?", "options": ["Splitting data into K subsets for iterative training and validation", "Training K models simultaneously", "Selecting K best features", "Running K epochs"], "answer": "Splitting data into K subsets for iterative training and validation", "difficulty": 2}
+  ],
+  "nlp": [
+    {"q": "What is tokenization in NLP?", "options": ["Translating languages", "Breaking text into words, subwords, or characters", "Sentiment classification", "Spell checking"], "answer": "Breaking text into words, subwords, or characters", "difficulty": 1},
+    {"q": "What does TF-IDF measure?", "options": ["Grammatical correctness", "Word importance relative to a document and corpus", "Sentence length", "Embedding dimensions"], "answer": "Word importance relative to a document and corpus", "difficulty": 2},
+    {"q": "What mechanism enables Transformers to weigh relationships between distant words?", "options": ["Recurrent cells", "Self-Attention", "Convolution filters", "Max pooling"], "answer": "Self-Attention", "difficulty": 3}
+  ],
+  "cloud_ml": [
+    {"q": "What is the primary purpose of MLOps?", "options": ["Writing ML algorithms from scratch", "Automating deployment, monitoring, and lifecycle of production ML", "Designing UI mockups", "Manual spreadsheet analysis"], "answer": "Automating deployment, monitoring, and lifecycle of production ML", "difficulty": 2},
+    {"q": "What is model drift (concept drift)?", "options": ["Hardware failure", "Statistical degradation of model accuracy as real-world data patterns change", "Slow API response", "Loss of training weights"], "answer": "Statistical degradation of model accuracy as real-world data patterns change", "difficulty": 2}
+  ],
+  "big_data": [
+    {"q": "What is Apache Spark primarily designed for?", "options": ["In-memory distributed computing at scale", "Frontend rendering", "Single-threaded relational queries", "CSS animations"], "answer": "In-memory distributed computing at scale", "difficulty": 2},
+    {"q": "What is an RDD in Spark?", "options": ["Relational Data Dictionary", "Resilient Distributed Dataset", "Random Data Distribution", "Realtime Data Delivery"], "answer": "Resilient Distributed Dataset", "difficulty": 2}
+  ],
+  "excel_analytics": [
+    {"q": "Which Excel formula is more flexible and safer than VLOOKUP?", "options": ["INDEX-MATCH or XLOOKUP", "SUMIF", "COUNTIF", "CONCATENATE"], "answer": "INDEX-MATCH or XLOOKUP", "difficulty": 1},
+    {"q": "What is a Pivot Table used for?", "options": ["Drawing charts", "Summarizing, analyzing, and aggregating multidimensional data", "Writing macros", "Formatting borders"], "answer": "Summarizing, analyzing, and aggregating multidimensional data", "difficulty": 1}
+  ],
+  "tableau": [
+    {"q": "In Tableau, what is the difference between Dimensions and Measures?", "options": ["Dimensions are qualitative/categorical; Measures are quantitative/numeric", "They are identical", "Measures are text; Dimensions are numbers", "Dimensions cannot be filtered"], "answer": "Dimensions are qualitative/categorical; Measures are quantitative/numeric", "difficulty": 1},
+    {"q": "What is a LOD (Level of Detail) expression in Tableau?", "options": ["Chart style", "Calculation computed independent of view visualization granularity", "Dashboard filter", "Data connection type"], "answer": "Calculation computed independent of view visualization granularity", "difficulty": 2}
+  ],
+  "r_programming": [
+    {"q": "Which R package ecosystem is widely used for data manipulation and visualization?", "options": ["Tidyverse (dplyr, ggplot2)", "NumPy", "Pandas", "Scikit-Learn"], "answer": "Tidyverse (dplyr, ggplot2)", "difficulty": 1},
+    {"q": "What operator is used for the pipe in modern R?", "options": ["|>", "->", "==", "::"], "answer": "|>", "difficulty": 2}
+  ],
+  "data_visualization": [
+    {"q": "Which chart type is best for displaying the distribution of a continuous variable?", "options": ["Pie chart", "Histogram / Box plot", "Donut chart", "Gauge chart"], "answer": "Histogram / Box plot", "difficulty": 1},
+    {"q": "What is the best chart for showing correlation between two numerical variables?", "options": ["Bar chart", "Scatter plot", "Treemap", "Radar chart"], "answer": "Scatter plot", "difficulty": 1}
+  ],
+
+  "programming_fundamentals": [
+    {"q": "What is the difference between a compiler and an interpreter?", "options": ["No difference", "Compiler translates all at once, interpreter line by line", "Interpreter is faster", "Compiler is only for Python"], "answer": "Compiler translates all at once, interpreter line by line", "difficulty": 1},
+    {"q": "What is a variable?", "options": ["A constant value", "A named storage location for data", "A function", "A loop"], "answer": "A named storage location for data", "difficulty": 1},
+    {"q": "What does 'debugging' mean?", "options": ["Writing code", "Finding and fixing errors in code", "Deploying code", "Testing code speed"], "answer": "Finding and fixing errors in code", "difficulty": 1}
+  ],
+  "oop": [
+    {"q": "What is encapsulation in Object-Oriented Programming?", "options": ["Bundling data and methods that operate on that data within a class, restricting direct access", "Inheriting from multiple parents", "Converting types", "Overriding functions"], "answer": "Bundling data and methods that operate on that data within a class, restricting direct access", "difficulty": 2},
+    {"q": "What is polymorphism?", "options": ["Objects of different types responding to the same method interface", "Multiple classes in one file", "Creating private variables", "Memory allocation"], "answer": "Objects of different types responding to the same method interface", "difficulty": 2},
+    {"q": "What does the 'L' stand for in SOLID design principles?", "options": ["Lambda", "Liskov Substitution Principle", "Linear Architecture", "Lazy Loading"], "answer": "Liskov Substitution Principle", "difficulty": 3}
+  ],
+  "data_structures": [
+    {"q": "What is the time complexity of accessing an element in an array by index?", "options": ["O(1)", "O(n)", "O(log n)", "O(n²)"], "answer": "O(1)", "difficulty": 1},
+    {"q": "Which data structure uses LIFO (Last In, First Out)?", "options": ["Queue", "Stack", "Linked List", "Tree"], "answer": "Stack", "difficulty": 1},
+    {"q": "What is the average time complexity of hash table lookup?", "options": ["O(1)", "O(n)", "O(log n)", "O(n log n)"], "answer": "O(1)", "difficulty": 2}
+  ],
+  "algorithms": [
+    {"q": "What is the time complexity of merge sort?", "options": ["O(n)", "O(n log n)", "O(n²)", "O(log n)"], "answer": "O(n log n)", "difficulty": 2},
+    {"q": "Which technique solves problems by breaking them into overlapping subproblems?", "options": ["Greedy", "Divide and Conquer", "Dynamic Programming", "Backtracking"], "answer": "Dynamic Programming", "difficulty": 2},
+    {"q": "BFS uses which data structure?", "options": ["Stack", "Queue", "Priority Queue", "Array"], "answer": "Queue", "difficulty": 1}
+  ],
+  "git_version_control": [
+    {"q": "What does `git pull` do?", "options": ["Fetches and merges changes from remote repository", "Deletes uncommitted files", "Creates a new branch", "Pushes commits"], "answer": "Fetches and merges changes from remote repository", "difficulty": 1},
+    {"q": "What is a merge conflict in Git?", "options": ["A broken network", "Competing changes made to the same lines in different branches", "A syntax error", "Corrupt commit"], "answer": "Competing changes made to the same lines in different branches", "difficulty": 1},
+    {"q": "Which command stages modified files for commit?", "options": ["git stage", "git add", "git commit", "git push"], "answer": "git add", "difficulty": 1}
+  ],
+  "web_fundamentals": [
+    {"q": "What is the difference between HTTP and HTTPS?", "options": ["No difference", "HTTPS is encrypted via SSL/TLS", "HTTP is faster", "HTTPS is only for mobile"], "answer": "HTTPS is encrypted via SSL/TLS", "difficulty": 1},
+    {"q": "What does DNS stand for?", "options": ["Domain Name System", "Dynamic Network Service", "Data Node Server", "Digital Network Security"], "answer": "Domain Name System", "difficulty": 1},
+    {"q": "Which HTTP method is idempotent and used to retrieve resources?", "options": ["POST", "GET", "PATCH", "CONNECT"], "answer": "GET", "difficulty": 1}
+  ],
+  "html_css": [
+    {"q": "What is the CSS Box Model composed of (from inside out)?", "options": ["Content -> Padding -> Border -> Margin", "Margin -> Border -> Padding -> Content", "Content -> Border -> Padding -> Margin", "Padding -> Content -> Margin -> Border"], "answer": "Content -> Padding -> Border -> Margin", "difficulty": 1},
+    {"q": "Which CSS layout module is designed for 1-dimensional layouts (row or column)?", "options": ["CSS Grid", "Flexbox", "Float", "Inline-block"], "answer": "Flexbox", "difficulty": 1},
+    {"q": "What does semantic HTML mean?", "options": ["Using elements that convey meaning (like <article>, <nav>, <header>) rather than generic <div>", "Adding lots of CSS", "Writing minified HTML", "Using table layouts"], "answer": "Using elements that convey meaning (like <article>, <nav>, <header>) rather than generic <div>", "difficulty": 1}
+  ],
+  "javascript": [
+    {"q": "What is a closure in JavaScript?", "options": ["A syntax error", "A function that remembers its lexical scope", "A way to close browser tabs", "An async pattern"], "answer": "A function that remembers its lexical scope", "difficulty": 2},
+    {"q": "What does `===` do differently from `==`?", "options": ["Nothing", "Checks type and value", "Only checks type", "Checks reference"], "answer": "Checks type and value", "difficulty": 1},
+    {"q": "What does `Promise.all()` do?", "options": ["Runs promises sequentially", "Resolves when all promises resolve", "Resolves when first promise resolves", "Cancels all promises"], "answer": "Resolves when all promises resolve", "difficulty": 2}
+  ],
+  "typescript": [
+    {"q": "What is the primary benefit of TypeScript over JavaScript?", "options": ["Static type checking at compile time", "Faster runtime speed", "Smaller file size", "No need for build step"], "answer": "Static type checking at compile time", "difficulty": 2},
+    {"q": "What is an Interface in TypeScript?", "options": ["A UI component", "A contract defining the shape and types of an object", "A database table", "An npm package"], "answer": "A contract defining the shape and types of an object", "difficulty": 2}
+  ],
+  "react": [
+    {"q": "What is the purpose of `useState` hook?", "options": ["Fetch data", "Manage component state", "Handle routing", "Style components"], "answer": "Manage component state", "difficulty": 1},
+    {"q": "What triggers a re-render in React?", "options": ["DOM mutation", "State or props change", "CSS change", "Console.log call"], "answer": "State or props change", "difficulty": 1},
+    {"q": "What is the Virtual DOM?", "options": ["A real DOM copy", "A lightweight JS representation of the DOM for efficient updates", "A browser API", "Server-side DOM"], "answer": "A lightweight JS representation of the DOM for efficient updates", "difficulty": 2}
+  ],
+  "nodejs": [
+    {"q": "What architecture allows Node.js to handle thousands of concurrent connections efficiently?", "options": ["Multi-threaded blocking I/O", "Single-threaded non-blocking Event Loop", "Forking new processes for each request", "Hardware acceleration"], "answer": "Single-threaded non-blocking Event Loop", "difficulty": 2},
+    {"q": "What is Express.js middleware?", "options": ["A database driver", "A function with access to req, res, and next() in the request-response cycle", "A CSS preprocessor", "A template engine"], "answer": "A function with access to req, res, and next() in the request-response cycle", "difficulty": 2}
+  ],
+  "databases_backend": [
+    {"q": "What does ACID stand for in relational databases?", "options": ["Atomicity, Consistency, Isolation, Durability", "Accuracy, Control, Integrity, Data", "Auto-Commit, Index, Distinct, Delete", "Async, Cluster, In-memory, Distributed"], "answer": "Atomicity, Consistency, Isolation, Durability", "difficulty": 2},
+    {"q": "When is a NoSQL document database (like MongoDB) preferred over SQL?", "options": ["When data has flexible, unstructured, or rapidly evolving schemas", "When complex multi-table JOINs are critical", "When strict ACID transactions across tables are primary", "Always"], "answer": "When data has flexible, unstructured, or rapidly evolving schemas", "difficulty": 2}
+  ],
+  "api_design": [
+    {"q": "Which HTTP status code signifies that a resource was successfully created?", "options": ["200 OK", "201 Created", "204 No Content", "400 Bad Request"], "answer": "201 Created", "difficulty": 1},
+    {"q": "What makes an API RESTful?", "options": ["Stateless communication, standard HTTP methods, resource-oriented URIs", "Using XML only", "Using WebSockets only", "Having a single endpoint"], "answer": "Stateless communication, standard HTTP methods, resource-oriented URIs", "difficulty": 2}
+  ],
+  "system_design": [
+    {"q": "What does horizontal scaling (scaling out) mean?", "options": ["Adding more RAM/CPU to existing single server", "Adding more server machines to a cluster", "Refactoring database schemas", "Caching static files"], "answer": "Adding more server machines to a cluster", "difficulty": 2},
+    {"q": "What is the CAP Theorem trade-off in distributed systems?", "options": ["Consistency, Availability, Partition Tolerance (pick at most 2 under partition)", "Cost, Accuracy, Performance", "Compute, API, Protocol", "Concurrency, Architecture, Processing"], "answer": "Consistency, Availability, Partition Tolerance (pick at most 2 under partition)", "difficulty": 3}
+  ],
+  "testing_qa": [
+    {"q": "What is the primary difference between Unit Tests and Integration Tests?", "options": ["Unit tests test isolated functions; integration tests test multiple interacting modules", "Unit tests are slower", "Integration tests require no code", "Unit tests are for UI only"], "answer": "Unit tests test isolated functions; integration tests test multiple interacting modules", "difficulty": 1},
+    {"q": "What is Mocking in software testing?", "options": ["Writing sarcastic comments", "Replacing complex dependencies with simulated objects to isolate code under test", "Compiling tests", "Testing UI in production"], "answer": "Replacing complex dependencies with simulated objects to isolate code under test", "difficulty": 2}
+  ],
+  "devops": [
+    {"q": "What is Docker primarily used for?", "options": ["Containerizing applications with their dependencies for consistent execution", "Writing JavaScript code", "Managing Git branches", "Database indexing"], "answer": "Containerizing applications with their dependencies for consistent execution", "difficulty": 1},
+    {"q": "What is CI/CD?", "options": ["Continuous Integration and Continuous Deployment/Delivery", "Code Inspection / Code Design", "Cloud Infrastructure / Cloud Data", "Central Index / Central Database"], "answer": "Continuous Integration and Continuous Deployment/Delivery", "difficulty": 1}
+  ],
+  "cloud_services": [
+    {"q": "What is Serverless computing (e.g. AWS Lambda)?", "options": ["Running code without servers existing", "Cloud-managed execution where cloud provider dynamically allocates resources and you pay per execution", "Private data centers", "Offline computing"], "answer": "Cloud-managed execution where cloud provider dynamically allocates resources and you pay per execution", "difficulty": 2},
+    {"q": "What is an S3 bucket in AWS?", "options": ["Object storage for files, images, and backups", "Relational database", "Virtual machine", "Load balancer"], "answer": "Object storage for files, images, and backups", "difficulty": 1}
+  ],
+  "security_fundamentals": [
+    {"q": "What is SQL Injection?", "options": ["Malicious SQL code inserted into user inputs to manipulate database execution", "Database backup tool", "Fast query optimization", "Encrypting database tables"], "answer": "Malicious SQL code inserted into user inputs to manipulate database execution", "difficulty": 2},
+    {"q": "What does XSS (Cross-Site Scripting) allow an attacker to do?", "options": ["Execute malicious JavaScript in the victim's browser", "DDoS a server", "Overheat the CPU", "Delete database tables directly"], "answer": "Execute malicious JavaScript in the victim's browser", "difficulty": 2}
+  ],
+  "agile_methodology": [
+    {"q": "In Scrum, what is a Sprint?", "options": ["A timeboxed iteration (usually 1-4 weeks) where a team delivers completed increments of work", "Running code quickly", "A one-day hackathon", "An emergency bug fix"], "answer": "A timeboxed iteration (usually 1-4 weeks) where a team delivers completed increments of work", "difficulty": 1},
+    {"q": "What is the purpose of a Sprint Retrospective?", "options": ["Reflecting on past sprint to identify process improvements", "Estimating story points", "Demonstrating to stakeholders", "Assigning blame"], "answer": "Reflecting on past sprint to identify process improvements", "difficulty": 1}
+  ],
+
+  "design_thinking": [
+    {"q": "What is the first phase of design thinking?", "options": ["Define", "Ideate", "Empathize", "Prototype"], "answer": "Empathize", "difficulty": 1},
+    {"q": "What makes design thinking different from traditional problem-solving?", "options": ["Uses more technology", "Starts with understanding users, not assumptions", "Is faster", "Requires more data"], "answer": "Starts with understanding users, not assumptions", "difficulty": 2},
+    {"q": "What is a 'How Might We' question?", "options": ["A business proposal", "A reframing technique to open solution space", "A user complaint", "A test hypothesis"], "answer": "A reframing technique to open solution space", "difficulty": 2}
+  ],
+  "user_research": [
+    {"q": "What is the main advantage of qualitative user interviews over quantitative surveys?", "options": ["Uncovering the 'why' and deep underlying motivations/pain points", "Gathering statistical significance across 10,000 users", "Faster automated analysis", "Lower cost"], "answer": "Uncovering the 'why' and deep underlying motivations/pain points", "difficulty": 2},
+    {"q": "What is an Empathy Map in UX?", "options": ["A visual tool capturing what users Say, Think, Do, and Feel", "A GPS map", "A sitemap", "A wireframe"], "answer": "A visual tool capturing what users Say, Think, Do, and Feel", "difficulty": 1},
+    {"q": "What is the difference between generative research and evaluative research?", "options": ["Generative discovers user needs; evaluative tests specific solutions", "Generative uses AI; evaluative uses humans", "Evaluative is done before product idea", "They are the same"], "answer": "Generative discovers user needs; evaluative tests specific solutions", "difficulty": 2}
+  ],
+  "wireframing": [
+    {"q": "What is the primary purpose of a low-fidelity wireframe?", "options": ["Establishing layout, structure, and hierarchy quickly without visual distraction", "Final client presentation", "Pixel-perfect color styling", "Code generation"], "answer": "Establishing layout, structure, and hierarchy quickly without visual distraction", "difficulty": 1},
+    {"q": "Why avoid high-fidelity colors and branding in early wireframes?", "options": ["Stakeholders fixate on visual details instead of core usability and flow", "Figma cannot support colors", "It makes files too big", "Colors are illegal in wireframes"], "answer": "Stakeholders fixate on visual details instead of core usability and flow", "difficulty": 1}
+  ],
+  "prototyping": [
+    {"q": "What is the difference between a wireframe and a prototype?", "options": ["Wireframes are static blueprints; prototypes are interactive simulations of user flow", "Prototypes are written in C++", "Wireframes have animations", "No difference"], "answer": "Wireframes are static blueprints; prototypes are interactive simulations of user flow", "difficulty": 1},
+    {"q": "What is a micro-interaction prototype?", "options": ["Simulating a specific button state, hover transition, or feedback animation", "A tiny screen size", "A short user interview", "A mini wireframe"], "answer": "Simulating a specific button state, hover transition, or feedback animation", "difficulty": 2}
+  ],
+  "visual_design": [
+    {"q": "What is visual hierarchy?", "options": ["File organization", "Arrangement of elements to guide the eye to most important content first", "Color selection", "Font pairing"], "answer": "Arrangement of elements to guide the eye to most important content first", "difficulty": 1},
+    {"q": "What is the Gestalt principle of proximity?", "options": ["Similar items look related", "Close items are perceived as grouped", "Items with borders are grouped", "Connected items are grouped"], "answer": "Close items are perceived as grouped", "difficulty": 2},
+    {"q": "What is whitespace in design?", "options": ["White-colored areas", "Empty space that gives elements room to breathe", "Background images", "Text areas"], "answer": "Empty space that gives elements room to breathe", "difficulty": 1}
+  ],
+  "typography": [
+    {"q": "What is the difference between Serif and Sans-Serif typefaces?", "options": ["Serifs have small decorative strokes at letter ends; Sans-serifs do not", "Serifs are only bold", "Sans-serifs cannot be used on web", "Serifs are italic"], "answer": "Serifs have small decorative strokes at letter ends; Sans-serifs do not", "difficulty": 1},
+    {"q": "What is 'Leading' (line-height) in typography?", "options": ["Vertical spacing between lines of text", "Space between individual characters", "Font weight", "Capitalization"], "answer": "Vertical spacing between lines of text", "difficulty": 2}
+  ],
+  "color_theory": [
+    {"q": "What is the WCAG AA minimum contrast ratio required for normal body text against its background?", "options": ["4.5:1", "2:1", "10:1", "1:1"], "answer": "4.5:1", "difficulty": 2},
+    {"q": "What are complementary colors?", "options": ["Colors opposite each other on the color wheel (e.g. Blue & Orange)", "Colors next to each other", "Shades of gray", "Pastel tints"], "answer": "Colors opposite each other on the color wheel (e.g. Blue & Orange)", "difficulty": 1}
+  ],
+  "figma": [
+    {"q": "What is Auto Layout in Figma?", "options": ["Automatic code generation", "Responsive frame sizing based on content", "AI-powered design", "Template system"], "answer": "Responsive frame sizing based on content", "difficulty": 1},
+    {"q": "What are Figma Components?", "options": ["Code snippets", "Reusable design elements with instances", "Color palettes", "Font collections"], "answer": "Reusable design elements with instances", "difficulty": 1},
+    {"q": "What are Variants in Figma?", "options": ["Different file versions", "Multiple states of a component in one set", "Color themes", "Animation frames"], "answer": "Multiple states of a component in one set", "difficulty": 2}
+  ],
+  "usability_testing": [
+    {"q": "What is the 'Think Aloud' protocol in usability testing?", "options": ["Participants verbalize their thoughts, questions, and reactions while performing tasks", "The moderator speaks loudly", "Testing audio quality", "Group debate"], "answer": "Participants verbalize their thoughts, questions, and reactions while performing tasks", "difficulty": 2},
+    {"q": "According to Jakob Nielsen, how many usability test participants typically uncover ~85% of core usability issues?", "options": ["5 participants", "100 participants", "1 participant", "1000 participants"], "answer": "5 participants", "difficulty": 2}
+  ],
+  "interaction_design": [
+    {"q": "What is 'Affordance' in UI design?", "options": ["Visual clues that indicate how an object can be interacted with (e.g. raised button looks clickable)", "Price of software", "Download speed", "Code efficiency"], "answer": "Visual clues that indicate how an object can be interacted with (e.g. raised button looks clickable)", "difficulty": 2},
+    {"q": "What is feedback in interaction design?", "options": ["System response communicating result of user action (e.g. loader, state change)", "Survey form", "Error log", "User review"], "answer": "System response communicating result of user action (e.g. loader, state change)", "difficulty": 1}
+  ],
+  "information_architecture": [
+    {"q": "What is Card Sorting used for in UX?", "options": ["Discovering how users naturally categorize and label content/navigation", "Playing poker", "CSS grid layout", "Wireframe sketching"], "answer": "Discovering how users naturally categorize and label content/navigation", "difficulty": 2},
+    {"q": "What is a Sitemap?", "options": ["A visual or structured diagram showing the hierarchical organization of pages in a digital product", "Google Maps embed", "Server route list", "Wireframe mockup"], "answer": "A visual or structured diagram showing the hierarchical organization of pages in a digital product", "difficulty": 1}
+  ],
+  "accessibility_design": [
+    {"q": "What is the primary role of ARIA attributes in web accessibility?", "options": ["Providing descriptive semantic roles and states to screen readers when HTML alone is insufficient", "Styling colors", "Accelerating JavaScript", "Handling cookies"], "answer": "Providing descriptive semantic roles and states to screen readers when HTML alone is insufficient", "difficulty": 2},
+    {"q": "Why is keyboard navigability (focus states) critical for accessibility?", "options": ["Users with motor disabilities rely on keyboards/switches rather than mice", "It looks cool", "It makes CSS smaller", "Keyboards are cheaper"], "answer": "Users with motor disabilities rely on keyboards/switches rather than mice", "difficulty": 1}
+  ],
+  "design_systems": [
+    {"q": "What are Design Tokens?", "options": ["The fundamental design values (colors, spacing, typography) stored as agnostic variables", "Cryptocurrency in Figma", "Icons", "Login cookies"], "answer": "The fundamental design values (colors, spacing, typography) stored as agnostic variables", "difficulty": 2},
+    {"q": "Why build a design system?", "options": ["Ensures visual consistency, accelerates cross-team development, and establishes scalable design standards", "To avoid writing code", "To replace designers", "Because competitors have one"], "answer": "Ensures visual consistency, accelerates cross-team development, and establishes scalable design standards", "difficulty": 1}
+  ],
+  "responsive_design": [
+    {"q": "What is a 'Mobile-First' design strategy?", "options": ["Designing for the smallest viewport first, progressively enhancing for larger desktop screens", "Only building mobile apps", "Disabling desktop layouts", "Using low-res images"], "answer": "Designing for the smallest viewport first, progressively enhancing for larger desktop screens", "difficulty": 1},
+    {"q": "What is the recommended minimum touch target size for mobile interfaces (Apple/Google guidelines)?", "options": ["44x44px to 48x48px", "10x10px", "100x100px", "5x5px"], "answer": "44x44px to 48x48px", "difficulty": 1}
+  ]
+}
