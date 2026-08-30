@@ -19,11 +19,11 @@ ENV PATH=/root/.local/bin:$PATH
 # Copy application files
 COPY . .
 
-# Set environment variables
+# Set environment variables (7860 is default for Hugging Face Spaces & cloud containers)
 ENV PYTHONUNBUFFERED=1
-ENV PORT=8000
+ENV PORT=7860
 
-EXPOSE 8000
+EXPOSE 7860
 
 # Run FastAPI server
 CMD ["python", "run.py"]
