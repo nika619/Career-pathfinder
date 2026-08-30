@@ -146,15 +146,39 @@ def get_next_diagnostic_question(
     }
 
 
+def _normalize_ans(text: str) -> str:
+    """Normalize answer string by trimming, stripping outer quotes/backticks, and lowering."""
+    if not text:
+        return ""
+    cleaned = text.strip().lower()
+    # Strip wrapping quotes if present: 'el' -> el, "el" -> el, `el` -> el
+    for q in ('"', "'", '`'):
+        if cleaned.startswith(q) and cleaned.endswith(q) and len(cleaned) >= 2:
+            cleaned = cleaned[1:-1].strip()
+    return cleaned
+
+
 def verify_answer(skill_id: str, question_text: str, selected_option: str) -> tuple[bool, str]:
-    """Verify if the chosen option is correct.
+    """Verify if the chosen option is correct with robust normalization.
 
     Returns:
         (is_correct, correct_answer)
     """
     items = _item_bank.get(skill_id, [])
+    norm_selected = _normalize_ans(selected_option)
+
     for item in items:
-        if item["q"] == question_text:
-            correct = (item["answer"].strip().lower() == selected_option.strip().lower())
-            return correct, item["answer"]
+        # Match question text (flexible on whitespace)
+        if item["q"].strip() == question_text.strip():
+            raw_answer = item["answer"]
+            norm_answer = _normalize_ans(raw_answer)
+            
+            # Match directly or normalized
+            correct = (
+                raw_answer.strip().lower() == selected_option.strip().lower() or
+                norm_answer == norm_selected
+            )
+            return correct, raw_answer
+            
     return False, "Unknown"
+
