@@ -188,7 +188,10 @@
           
           <!-- Readiness & Summary Card -->
           <div class="side-card metrics-card tilt-3d">
-            <h3 class="side-card-title">Role Readiness Index</h3>
+            <div class="metrics-header-row">
+              <h3 class="side-card-title mb-0">Role Readiness Index</h3>
+              <span class="chip on">Bayesian BKT Vector</span>
+            </div>
             <div class="readiness-gauge">
               <div class="gauge-ring-3d">
                 <div class="orbit-ring orbit-1"></div>
@@ -198,7 +201,6 @@
               <div class="gauge-meta">
                 <p id="metric-skills-count" class="gauge-detail">0 of 14 skills mastered</p>
                 <p id="metric-hours-total" class="gauge-detail">140 total learning hours</p>
-                <span class="chip on">Bayesian BKT Vector</span>
               </div>
             </div>
 
@@ -207,20 +209,18 @@
             </div>
           </div>
 
-          <!-- Glass-Box Reasoning Inspector -->
-          <div class="side-card explain-card tilt-3d">
-            <div class="explain-card-header">
-              <h3 class="side-card-title">🔍 Glass-Box Trace Inspector</h3>
-              <span class="chip on">Deterministic</span>
-            </div>
-            <p class="explain-intro">Select any milestone node on the left to inspect its complete mathematical & labor-market justification.</p>
-            <div id="inspector-content" class="inspector-box">
-              <div class="inspector-placeholder">Click any "Inspect Trace" button on a step to see the reasoning breakdown.</div>
-            </div>
+          <!-- Dual Command Deck Switcher (Eliminates vertical scroll fatigue) -->
+          <div class="sidebar-deck-tabs">
+            <button type="button" class="deck-tab active" id="tab-deck-coach" onclick="window.switchSidebarDeck('coach')">
+              <span class="tab-icon">🤖</span> AI Learning Coach
+            </button>
+            <button type="button" class="deck-tab" id="tab-deck-explain" onclick="window.switchSidebarDeck('explain')">
+              <span class="tab-icon">🔍</span> Glass-Box Trace
+            </button>
           </div>
 
-          <!-- Grounded AI Career Coach (Multi-Agent Guild & Voice Enabled) -->
-          <div class="side-card chat-card tilt-3d">
+          <!-- Deck Panel 1: Grounded AI Career Coach (Active by Default) -->
+          <div id="deck-panel-coach" class="side-card chat-card tilt-3d deck-panel active">
             <div class="coach-header-3d">
               <div class="coach-avatar-3d" id="coach-avatar-icon">🤖</div>
               <div style="flex-grow: 1;">
@@ -261,7 +261,20 @@
             </form>
           </div>
 
+          <!-- Deck Panel 2: Glass-Box Reasoning Inspector -->
+          <div id="deck-panel-explain" class="side-card explain-card tilt-3d deck-panel">
+            <div class="explain-card-header">
+              <h3 class="side-card-title mb-0">🔍 Glass-Box Trace Inspector</h3>
+              <span class="chip on">Deterministic</span>
+            </div>
+            <p class="explain-intro font-12 muted">Select any milestone node on the left to inspect its complete mathematical & labor-market justification.</p>
+            <div id="inspector-content" class="inspector-box">
+              <div class="inspector-placeholder">Click any "Inspect Trace" button on a step to see the reasoning breakdown.</div>
+            </div>
+          </div>
+
         </div>
+
 
       </div>
     </section>

@@ -537,6 +537,77 @@ html[data-theme="light"] .chat-input-bar {
   background: #FFFFFF;
 }
 
+/* Sidebar Dual Deck Tabs */
+.sidebar-deck-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(18, 22, 32, 0.85);
+  border: 1px solid rgba(224, 166, 76, 0.25);
+  padding: 4px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  margin-bottom: 4px;
+}
+
+html[data-theme="light"] .sidebar-deck-tabs {
+  background: #F5EFE6 !important;
+  border: 1px solid rgba(192, 106, 10, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(68, 48, 20, 0.06) !important;
+}
+
+.deck-tab {
+  flex: 1;
+  padding: 9px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.deck-tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.deck-tab.active {
+  background: rgba(224, 166, 76, 0.15);
+  color: var(--gold);
+  border-color: rgba(224, 166, 76, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme="light"] .deck-tab.active {
+  background: #FFFFFF !important;
+  color: #92400E !important;
+  border-color: rgba(192, 106, 10, 0.4) !important;
+  box-shadow: 0 2px 6px rgba(68, 48, 20, 0.08) !important;
+}
+
+/* Prerequisite Status & Trace Table Badge Fix */
+.trace-table td {
+  vertical-align: middle;
+  padding: 7px 0;
+}
+
+.trace-table td .chip {
+  white-space: normal !important;
+  display: inline-block !important;
+  line-height: 1.35 !important;
+  padding: 3px 8px !important;
+  font-size: 11px !important;
+  border-radius: 4px !important;
+}
+
+
 /* Trace Table & Inspector Box */
 html[data-theme="light"] .inspector-box,
 html[data-theme="light"] .inline-trace-box {

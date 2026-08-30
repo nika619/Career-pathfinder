@@ -591,15 +591,87 @@ button { font-family: var(--sans); cursor: pointer; border: none; border-radius:
   box-shadow: 0 4px 16px rgba(0,0,0,0.5);
 }
 
-/* Sidebar Column */
-.sidebar-column { display: flex; flex-direction: column; gap: 24px; position: sticky; top: 90px; }
+/* Sidebar Column & Dual Command Deck */
+.sidebar-column { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; 
+  position: sticky; 
+  top: 85px; 
+  z-index: 10;
+}
+
+.metrics-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sidebar-deck-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(18, 22, 32, 0.85);
+  border: 1px solid var(--line);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.deck-tab {
+  flex: 1;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.deck-tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.deck-tab.active {
+  background: var(--gold-bg);
+  color: var(--gold);
+  border-color: rgba(224, 166, 76, 0.35);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
+.deck-panel {
+  display: none !important;
+}
+
+.deck-panel.active {
+  display: flex !important;
+  flex-direction: column;
+  animation: fadeInDeck 0.2s ease-out;
+}
+
+@keyframes fadeInDeck {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .side-card {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  padding: 22px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
 }
-.side-card-title { font-size: 16px; font-weight: 600; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
+.side-card-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+
 
 /* 3D Readiness Hologram Gauge */
 .readiness-gauge { display: flex; align-items: center; gap: 20px; margin-bottom: 18px; }

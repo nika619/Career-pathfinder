@@ -463,12 +463,38 @@ window.toggleInlineTrace = async function(skillId) {
   await inspectTrace(skillId);
 };
 
+// ----------------- Sidebar Dual Command Deck -----------------
+
+window.switchSidebarDeck = function(tabId) {
+  const coachTab = document.getElementById("tab-deck-coach");
+  const explainTab = document.getElementById("tab-deck-explain");
+  const coachPanel = document.getElementById("deck-panel-coach");
+  const explainPanel = document.getElementById("deck-panel-explain");
+
+  if (tabId === "explain") {
+    if (coachTab) coachTab.classList.remove("active");
+    if (explainTab) explainTab.classList.add("active");
+    if (coachPanel) coachPanel.classList.remove("active");
+    if (explainPanel) explainPanel.classList.add("active");
+  } else {
+    if (coachTab) coachTab.classList.add("active");
+    if (explainTab) explainTab.classList.remove("active");
+    if (coachPanel) coachPanel.classList.add("active");
+    if (explainPanel) explainPanel.classList.remove("active");
+  }
+};
+
 async function inspectTrace(skillId) {
   state.selectedNodeSkill = skillId;
   const inspector = document.getElementById("inspector-content");
   if (!inspector) return;
 
-  inspector.innerHTML = `<div class="muted">Extracting algorithmic reasoning trace...</div>`;
+  // Auto-switch to trace inspector deck panel
+  if (typeof window.switchSidebarDeck === "function") {
+    window.switchSidebarDeck("explain");
+  }
+
+  inspector.innerHTML = `<div class="muted font-12" style="padding: 12px 0;">Extracting algorithmic reasoning trace...</div>`;
 
   try {
     const res = await fetch(`${API_BASE}/api/explain`, {
@@ -483,13 +509,18 @@ async function inspectTrace(skillId) {
       ? t.prerequisites_required.join(", ") 
       : "None (Foundational Entrypoint)";
 
+    // Format prerequisite status cleanly without awkward line wrapping
+    const prereqStatusBadge = t.prerequisites_status === "All prerequisites satisfied or scheduled prior"
+      ? `<span class="chip on" style="white-space: normal; display: inline-block; font-size: 11px; padding: 3px 8px; line-height: 1.3;">✓ Satisfied & Scheduled</span>`
+      : `<span class="chip on" style="white-space: normal; display: inline-block; font-size: 11px; padding: 3px 8px; line-height: 1.3;">${t.prerequisites_status}</span>`;
+
     inspector.innerHTML = `
       <table class="trace-table">
         <tr><td>Target Career Role</td><td><strong>${t.target_role}</strong></td></tr>
         <tr><td>O*NET Importance</td><td>${Math.round(t.skill_importance_score * 100)}% (${t.onet_classification})</td></tr>
         <tr><td>Measured Baseline</td><td>${t.measured_mastery_level}</td></tr>
         <tr><td>Prerequisites</td><td>${prereqsText}</td></tr>
-        <tr><td>Prerequisite Status</td><td><span class="chip on">${t.prerequisites_status}</span></td></tr>
+        <tr><td>Prerequisite Status</td><td>${prereqStatusBadge}</td></tr>
       </table>
       <div class="trace-narrative">
         <strong>Explainable AI Rationale:</strong><br>
@@ -506,6 +537,7 @@ async function inspectTrace(skillId) {
     console.error("Inspector error:", err);
   }
 }
+
 
 // ----------------- Dynamic Milestone Re-planning & Capstone Evaluation -----------------
 
