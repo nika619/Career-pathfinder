@@ -599,6 +599,10 @@ button { font-family: var(--sans); cursor: pointer; border: none; border-radius:
   position: sticky; 
   top: 85px; 
   z-index: 10;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
 }
 
 .metrics-header-row {
@@ -656,6 +660,10 @@ button { font-family: var(--sans); cursor: pointer; border: none; border-radius:
   display: flex !important;
   flex-direction: column;
   animation: fadeInDeck 0.2s ease-out;
+  /* Constrain height so chat input is always visible */
+  max-height: calc(100vh - 320px);
+  min-height: 0;
+  overflow: hidden;
 }
 
 @keyframes fadeInDeck {
@@ -847,13 +855,15 @@ button { font-family: var(--sans); cursor: pointer; border: none; border-radius:
   border-radius: var(--radius-sm);
   padding: 16px;
   font-size: 12.5px;
-  min-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100vh - 440px);
 }
 .inspector-placeholder { color: var(--faint); font-style: italic; text-align: center; padding: 40px 10px; }
 .trace-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
-.trace-table td { padding: 5px 0; border-bottom: 1px solid var(--line-soft); }
-.trace-table td:first-child { color: var(--muted); font-family: var(--mono); font-size: 11px; width: 45%; }
-.trace-table td:last-child { color: var(--text); font-weight: 500; }
+.trace-table td { padding: 5px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+.trace-table td:first-child { color: var(--muted); font-family: var(--mono); font-size: 11px; width: 36%; padding-right: 8px; }
+.trace-table td:last-child { color: var(--text); font-weight: 500; word-break: break-word; }
 .trace-narrative {
   background: var(--raised);
   border-left: 2px solid var(--gold);
@@ -862,6 +872,9 @@ button { font-family: var(--sans); cursor: pointer; border: none; border-radius:
   font-size: 12px;
   line-height: 1.5;
   color: #E2E8F0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 /* Chat Assistant */
@@ -896,7 +909,8 @@ button { font-family: var(--sans); cursor: pointer; border: none; border-radius:
 }
 
 .chat-stream {
-  height: 250px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -1133,6 +1147,8 @@ button { font-family: var(--sans); cursor: pointer; border: none; border-radius:
   padding: 6px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  margin-top: auto;
 }
 
 .chat-input-bar input {

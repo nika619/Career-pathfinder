@@ -505,14 +505,15 @@ async function inspectTrace(skillId) {
     const data = await res.json();
     const t = data.trace;
 
-    const prereqsText = t.prerequisites_required && t.prerequisites_required.length > 0 
+    const hasPrereqs = t.prerequisites_required && t.prerequisites_required.length > 0;
+    const prereqsText = hasPrereqs
       ? t.prerequisites_required.join(", ") 
-      : "None (Foundational Entrypoint)";
+      : "None (foundational)";
 
-    // Format prerequisite status cleanly without awkward line wrapping
-    const prereqStatusBadge = t.prerequisites_status === "All prerequisites satisfied or scheduled prior"
-      ? `<span class="chip on" style="white-space: normal; display: inline-block; font-size: 11px; padding: 3px 8px; line-height: 1.3;">✓ Satisfied & Scheduled</span>`
-      : `<span class="chip on" style="white-space: normal; display: inline-block; font-size: 11px; padding: 3px 8px; line-height: 1.3;">${t.prerequisites_status}</span>`;
+    // Only show Prerequisite Status row when there are actual prerequisites to report
+    const prereqStatusRow = hasPrereqs
+      ? `<tr><td>Prerequisite Status</td><td><span class="chip on" style="font-size: 11px; padding: 3px 8px;">✓ All Prerequisites Met</span></td></tr>`
+      : "";
 
     inspector.innerHTML = `
       <table class="trace-table">
@@ -520,7 +521,7 @@ async function inspectTrace(skillId) {
         <tr><td>O*NET Importance</td><td>${Math.round(t.skill_importance_score * 100)}% (${t.onet_classification})</td></tr>
         <tr><td>Measured Baseline</td><td>${t.measured_mastery_level}</td></tr>
         <tr><td>Prerequisites</td><td>${prereqsText}</td></tr>
-        <tr><td>Prerequisite Status</td><td>${prereqStatusBadge}</td></tr>
+        ${prereqStatusRow}
       </table>
       <div class="trace-narrative">
         <strong>Explainable AI Rationale:</strong><br>
