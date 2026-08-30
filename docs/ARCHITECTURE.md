@@ -262,3 +262,15 @@ docker-compose up --build
 ### Q3: How is sub-millisecond execution achieved without GPU infrastructure?
 **Answer:** Rather than generating embeddings on-the-fly with heavy PyTorch runtimes, dense vectors for all 105 courses and 53 skills are pre-computed offline using `all-MiniLM-L6-v2` and stored as compact `.npy` matrices. At runtime, vector cosine similarity and multi-factor ranking are computed via vectorized NumPy operations, executing in **~0.83 ms** per learner roadmap.
 
+---
+
+## 10. Engineering Team & Institutional Attribution
+
+**Team LODESTAR** — **Babu Banarasi Das University** (B.Tech 2023–2027)  
+*Built for the HCLTech AMPlified National Hackathon*
+
+- **Mayank** *(Team Leader)* — Lead AI & System Architect
+- **Shubh Yadav** — Full-Stack & Backend Systems Engineer
+- **Uma Jaiswal** — Frontend & Empirical Evaluation Lead
+
+

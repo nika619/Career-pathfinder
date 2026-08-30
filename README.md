@@ -4,6 +4,7 @@
 > *Built & Engineered for the **HCL Amplified National Hackathon***
 
 [![HCL Amplified](https://img.shields.io/badge/HCL%20Amplified-National%20Hackathon%20Submission-E11D48.svg)](https://github.com/nika619/Career-pathfinder-nika619)
+[![CI Pipeline](https://github.com/nika619/Career-pathfinder-nika619/actions/workflows/ci.yml/badge.svg)](https://github.com/nika619/Career-pathfinder-nika619/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.141.1-009688.svg)](https://fastapi.tiangolo.com/)
 [![Tests](https://img.shields.io/badge/Tests-54%2F54%20Passing%20(100%25)-brightgreen.svg)](tests/)
@@ -28,8 +29,9 @@ When developers turn to naive Generative AI chatbots (e.g., standard ChatGPT wra
 
 ### The Guiding Architectural Principle
 
-$$\Large \text{\textbf{The deterministic engine decides \textit{WHAT} and \textit{IN WHAT ORDER}.}}$$
-$$\Large \text{\textbf{The Language Model ONLY phrases, coaches, and explains.}}$$
+> ### 🏛️ The Core Separation of Concerns
+> **The deterministic engine decides WHAT and IN WHAT ORDER.**  
+> *The language model ONLY phrases, coaches, and explains within grounded context.*
 
 Career PathFinder hard-fences the LLM away from curriculum compilation. Instead, curriculum sequencing is mathematically guaranteed by a **53-node Directed Acyclic Graph (DAG)** running **Kahn's Topological Sort**, learner mastery is measured through **Bayesian Knowledge Tracing (BKT)**, and course retrieval is performed via offline **dense semantic vector embeddings** (`all-MiniLM-L6-v2`) evaluated through a multi-factor ranking function.
 
@@ -298,15 +300,18 @@ career-pathfinder/
 
 ---
 
-## 🏆 Hackathon Showcase & Mission
-Developed and submitted for the **HCL Amplified National Hackathon — AI-Powered Personalized Learning Path Challenge**.
+## 👥 Team LODESTAR
 
-Career PathFinder addresses the core theme of the challenge by moving beyond superficial course aggregation:
-- **Zero Prerequisite Inversions**: Guaranteed via Kahn's Topological Sort over an induced DAG.
-- **Real Student Competency Modeling**: Dynamic Bayesian Knowledge Tracing replacing unreliable self-reported surveys.
-- **Empirical Grounding**: Labour-market weights anchored in O\*NET data and real courses retrieved via dense vector similarity.
+Built and submitted by **Team LODESTAR** from **Babu Banarasi Das University** (B.Tech 2023–2027) for the **HCLTech AMPlified National Hackathon**:
+
+| Member | Role | Core Contributions & Systems Ownership |
+| :--- | :--- | :--- |
+| **Mayank** *(Team Leader)* | **Lead AI & System Architect** | End-to-end system architecture, DAG topological sorting engine (Kahn's algorithm), Bayesian Knowledge Tracing (BKT) student model, dense semantic embedding pipeline, and OWASP security hardening. |
+| **Shubh Yadav** | **Full-Stack & Backend Systems Engineer** | FastAPI REST service architecture, dynamic adaptive re-planning engine, SQLite WAL session persistence, milestone rubric evaluator, and end-to-end integration test suite. |
+| **Uma Jaiswal** | **Frontend & Empirical Evaluation Lead** | Dark editorial UI/UX dashboard ("Cartographer's Observatory"), Three.js ambient observatory, interactive SVG DAG explorer, and 1,000-learner Monte Carlo empirical benchmark suite. |
 
 ---
 
 ## 📄 License
 Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
+
