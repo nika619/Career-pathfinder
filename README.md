@@ -3,6 +3,7 @@
 > **Grounded, Adaptive & Explainable AI Learning Path Engine**  
 > *Built & Engineered for the **HCL Amplified National Hackathon***
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-career--pathfinder-brightgreen?logo=render&logoColor=white)](https://career-pathfinder-nika619.onrender.com/)
 [![HCL Amplified](https://img.shields.io/badge/HCL%20Amplified-National%20Hackathon%20Submission-E11D48.svg)](https://github.com/nika619/Career-pathfinder-nika619)
 [![CI Pipeline](https://github.com/nika619/Career-pathfinder-nika619/actions/workflows/ci.yml/badge.svg)](https://github.com/nika619/Career-pathfinder-nika619/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
@@ -12,6 +13,9 @@
 [![O*NET Grounded](https://img.shields.io/badge/Taxonomy-O*NET%20Weighted-orange.svg)](backend/data/role_skills.json)
 [![Security](https://img.shields.io/badge/Security-OWASP%20Hardened-purple.svg)](tests/test_security.py)
 [![License](https://img.shields.io/badge/License-MIT-gray.svg)](LICENSE)
+
+> 🚀 **Live Production Deployment**: [https://career-pathfinder-nika619.onrender.com/](https://career-pathfinder-nika619.onrender.com/)
+
 
 ---
 

@@ -1,6 +1,9 @@
 # Career PathFinder — Master Project Handbook & Architectural Specification
 *The Complete Ground-Truth Guide to Career PathFinder SaaS*
 
+> 🚀 **Live Production Deployment**: [https://career-pathfinder-nika619.onrender.com/](https://career-pathfinder-nika619.onrender.com/)  
+> 🔗 **Repository**: [https://github.com/nika619/Career-pathfinder-nika619](https://github.com/nika619/Career-pathfinder-nika619)
+
 ---
 
 ## 1. Executive Summary & Problem Space
