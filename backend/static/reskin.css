@@ -776,6 +776,21 @@ html[data-theme="light"] .rubric-pts {
   font-weight: 700 !important;
 }
 
+/* Light Theme Artisan Hallmark */
+html[data-theme="light"] .artisan-watermark {
+  color: #78716C !important;
+  opacity: 0.45 !important;
+}
+
+html[data-theme="light"] .artisan-watermark:hover {
+  color: #92400E !important;
+  opacity: 0.9 !important;
+}
+
+html[data-theme="light"] .artisan-dot {
+  background: #D97706 !important;
+}
+
 
 
 

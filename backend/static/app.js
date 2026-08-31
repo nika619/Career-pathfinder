@@ -228,7 +228,7 @@ async function submitDiagnosticAnswer(selectedOption, clickedBtn) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       user_id: state.userId,
-      skill_id: state.currentSkillId,
+      skill_id: state.currentQuestion?.skill_id || state.currentSkillId,
       question_text: state.currentQuestion.question,
       selected_option: selectedOption
     })
@@ -240,6 +240,14 @@ async function submitDiagnosticAnswer(selectedOption, clickedBtn) {
     clickedBtn.classList.add("selected-correct");
   } else {
     clickedBtn.classList.add("selected-wrong");
+    // Also reveal correct option for crystal-clear pedagogical feedback
+    document.querySelectorAll(".option-btn").forEach(b => {
+      const bText = b.innerText.trim().toLowerCase();
+      const cText = (result.correct_answer || "").trim().toLowerCase();
+      if (bText === cText || bText.replace(/['"`]/g, '') === cText.replace(/['"`]/g, '')) {
+        b.classList.add("selected-correct");
+      }
+    });
   }
 
   // Update mastery badge
@@ -958,27 +966,330 @@ if (btnVoiceInput) {
   }
 }
 
-// Text-to-Speech Read-Aloud Toggle
+// ----------------- Pleasing Natural AI Voice Engine (Web Speech API) -----------------
+let cachedAvailableVoices = [];
+
+function initPleasingVoices() {
+  if (!window.speechSynthesis) return;
+  
+  const updateVoices = () => {
+    try {
+      const voices = window.speechSynthesis.getVoices() || [];
+      if (voices.length > 0) {
+        cachedAvailableVoices = voices;
+      }
+    } catch (e) {
+      console.warn("Could not retrieve system voices:", e);
+    }
+  };
+
+  updateVoices();
+  if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = updateVoices;
+  }
+}
+
+// Initialise voices eagerly
+initPleasingVoices();
+
+// Ranked list of the most pleasing, natural-sounding, soft-spoken US English voices across platforms
+const PLEASING_VOICE_PREFERENCES = {
+  // General Coach: Warm, gentle, inviting, soft-spoken US female/balanced voice
+  general: [
+    "Microsoft Jenny Online (Natural) - English (United States)",
+    "Microsoft Aria Online (Natural) - English (United States)",
+    "Google US English",
+    "Microsoft Michelle Online (Natural) - English (United States)",
+    "Samantha (Enhanced)",
+    "Samantha (Premium)",
+    "Ava (Enhanced)",
+    "Ava (Premium)",
+    "Allison (Enhanced)",
+    "Microsoft Jenny (Natural)",
+    "Microsoft Aria (Natural)",
+    "Samantha",
+    "Ava",
+    "Microsoft Zira - English (United States)",
+    "Microsoft Zira",
+  ],
+  // Algorithm Specialist: Clear, articulate, soft, calm US voice
+  algo_specialist: [
+    "Microsoft Christopher Online (Natural) - English (United States)",
+    "Microsoft Guy Online (Natural) - English (United States)",
+    "Microsoft Eric Online (Natural) - English (United States)",
+    "Google US English",
+    "Tom (Enhanced)",
+    "Samantha (Enhanced)",
+    "Alex",
+    "Microsoft Guy (Natural)",
+    "Microsoft David - English (United States)",
+    "Microsoft David",
+  ],
+  // System Architect: Deep, steady, calm, gentle US voice
+  system_architect: [
+    "Microsoft Steffan Online (Natural) - English (United States)",
+    "Microsoft Roger Online (Natural) - English (United States)",
+    "Microsoft Guy Online (Natural) - English (United States)",
+    "Google US English",
+    "Alex",
+    "Samantha (Enhanced)",
+    "Microsoft Steffan (Natural)",
+    "Microsoft David - English (United States)",
+    "Microsoft David",
+  ],
+  // Executive Career Strategist: Polished, smooth, poised, gentle US voice
+  career_strategist: [
+    "Microsoft Aria Online (Natural) - English (United States)",
+    "Microsoft Jenny Online (Natural) - English (United States)",
+    "Microsoft Michelle Online (Natural) - English (United States)",
+    "Google US English",
+    "Ava (Enhanced)",
+    "Samantha (Enhanced)",
+    "Ava (Premium)",
+    "Samantha (Premium)",
+    "Samantha",
+    "Ava",
+    "Microsoft Zira - English (United States)",
+    "Microsoft Zira",
+  ]
+};
+
+function isUsVoice(v) {
+  if (!v) return false;
+  const lang = (v.lang || "").toLowerCase();
+  const name = (v.name || "").toLowerCase();
+  // Exclude British / UK voices explicitly
+  if (lang.includes("gb") || lang.includes("uk") || name.includes("uk english") || name.includes("united kingdom") || name.includes("great britain")) {
+    return false;
+  }
+  return lang === "en-us" || lang === "en_us" || lang.startsWith("en-us") || name.includes("united states") || name.includes("us english") || name.includes("(us)") || (!lang.includes("-") && name.includes("us"));
+}
+
+function getPleasingVoice(persona = "general") {
+  if (!cachedAvailableVoices || cachedAvailableVoices.length === 0) {
+    if (window.speechSynthesis) {
+      cachedAvailableVoices = window.speechSynthesis.getVoices() || [];
+    }
+  }
+  if (!cachedAvailableVoices || cachedAvailableVoices.length === 0) return null;
+
+  const targetPreferences = PLEASING_VOICE_PREFERENCES[persona] || PLEASING_VOICE_PREFERENCES.general;
+
+  // 1. Try exact matches from persona US preferences
+  for (const preferredName of targetPreferences) {
+    const found = cachedAvailableVoices.find(v => v.name.toLowerCase() === preferredName.toLowerCase());
+    if (found) return found;
+  }
+
+  // 2. Try partial name matches from persona US preferences (ensuring US voice)
+  for (const preferredName of targetPreferences) {
+    const firstWord = preferredName.split(" ")[0].toLowerCase();
+    const secondWord = preferredName.split(" ")[1]?.toLowerCase();
+    const found = cachedAvailableVoices.find(v => {
+      const vName = v.name.toLowerCase();
+      return isUsVoice(v) && vName.includes(firstWord) && (!secondWord || vName.includes(secondWord));
+    });
+    if (found) return found;
+  }
+
+  // 3. Look for any Natural / Neural / Studio / Premium / Enhanced US English voice
+  const highQualityKeywords = ["natural", "neural", "online (natural)", "enhanced", "premium", "studio", "google"];
+  for (const keyword of highQualityKeywords) {
+    const match = cachedAvailableVoices.find(v => 
+      isUsVoice(v) && v.name.toLowerCase().includes(keyword)
+    );
+    if (match) return match;
+  }
+
+  // 4. Look for any US English voice
+  const usVoice = cachedAvailableVoices.find(v => isUsVoice(v));
+  if (usVoice) return usVoice;
+
+  // 5. Fallback to any non-UK English voice if available
+  const englishVoice = cachedAvailableVoices.find(v => {
+    const lang = (v.lang || "").toLowerCase();
+    const name = (v.name || "").toLowerCase();
+    return (lang.startsWith("en") && !lang.includes("gb") && !name.includes("uk english"));
+  });
+  if (englishVoice) return englishVoice;
+
+  // 6. Default browser fallback voice
+  return cachedAvailableVoices.find(v => v.default) || cachedAvailableVoices[0] || null;
+}
+
+function getVoiceProsody(persona = "general") {
+  // Soft-spoken, calm, gentle acoustic profile (unhurried rate, warm pitch, comfortable volume)
+  switch (persona) {
+    case "algo_specialist":
+      return { rate: 0.94, pitch: 0.98, volume: 0.88 };
+    case "system_architect":
+      return { rate: 0.92, pitch: 0.96, volume: 0.88 };
+    case "career_strategist":
+      return { rate: 0.93, pitch: 0.99, volume: 0.88 };
+    case "general":
+    default:
+      return { rate: 0.93, pitch: 0.98, volume: 0.88 };
+  }
+}
+
+function cleanTextForSpeech(text) {
+  if (!text) return "";
+  let clean = text
+    // Replace mermaid blocks with a friendly spoken notification
+    .replace(/```mermaid[\s\S]*?```/gi, " I have rendered an interactive architecture diagram on your screen. ")
+    // Replace markdown code blocks
+    .replace(/```[\s\S]*?```/g, " Code example displayed. ")
+    // Replace markdown links: [label](url) -> label
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    // Remove HTML tags
+    .replace(/<[^>]*>/g, "")
+    // Remove markdown formatting symbols
+    .replace(/[*_`#~>]/g, "")
+    // Remove markdown bullet points / headers at line starts
+    .replace(/^[\s-•*#]+/gm, "")
+    // Remove emojis to avoid unnatural emoji metadata pronunciation
+    .replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F1E6}-\u{1F1FF}]/gu, "")
+    // Clean up excessive whitespace
+    .replace(/\s+/g, " ")
+    .trim();
+
+  // Smart sentence truncation to avoid mid-word cuts and keep voice concise and pleasant
+  // Keeps full sentences up to ~320 characters
+  if (clean.length > 320) {
+    const sentenceEndings = [...clean.matchAll(/[.!?]\s+/g)];
+    let bestCut = -1;
+    for (const match of sentenceEndings) {
+      if (match.index >= 120 && match.index <= 320) {
+        bestCut = match.index + 1;
+      }
+    }
+    if (bestCut > 0) {
+      clean = clean.substring(0, bestCut);
+    } else {
+      const lastSpace = clean.lastIndexOf(" ", 300);
+      if (lastSpace > 100) {
+        clean = clean.substring(0, lastSpace) + "...";
+      }
+    }
+  }
+
+  return clean;
+}
+
+// Text-to-Speech Read-Aloud Toggle with Gemini 2.5 Flash Native Audio
 const btnVoiceToggle = document.getElementById("btn-voice-toggle");
+let currentNativeAudio = null;
+
 btnVoiceToggle?.addEventListener("click", () => {
   state.ttsActive = !state.ttsActive;
   if (state.ttsActive) {
     btnVoiceToggle.classList.add("active");
-    showToast("Audio Read-Aloud Enabled 🔊", "info");
-    speakText("Audio read aloud enabled. I will read my responses aloud to you.");
+    const persona = state.activePersona || "general";
+    const geminiVoiceMap = {
+      general: "Kore (Warm Soft-Spoken)",
+      algo_specialist: "Puck (Articulate Specialist)",
+      system_architect: "Fenrir (Deep Architect)",
+      career_strategist: "Aoede (Poised Strategist)"
+    };
+    const voiceLabel = geminiVoiceMap[persona] || "Kore";
+    showToast(`Gemini 2.5 Flash Native Audio Enabled 🔊 (${voiceLabel})`, "info");
+    speakText("Audio read aloud enabled. I will read my guidance aloud with Gemini 2.5 Flash native voice.");
   } else {
     btnVoiceToggle.classList.remove("active");
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    btnVoiceToggle.classList.remove("speaking");
+    stopAllAudioPlayback();
     showToast("Audio Read-Aloud Disabled 🔇", "info");
   }
 });
 
-function speakText(text) {
-  if (!state.ttsActive || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const clean = text.replace(/<[^>]*>/g, "").replace(/[*`#_~]/g, "").replace(/```[\s\S]*?```/g, "Architecture diagram.");
-  const utterance = new SpeechSynthesisUtterance(clean.substring(0, 300));
-  utterance.rate = 1.0;
+function stopAllAudioPlayback() {
+  if (currentNativeAudio) {
+    try {
+      currentNativeAudio.pause();
+      currentNativeAudio.currentTime = 0;
+    } catch (e) {}
+    currentNativeAudio = null;
+  }
+  if (window.speechSynthesis) {
+    try {
+      window.speechSynthesis.cancel();
+    } catch (e) {}
+  }
+}
+
+async function speakText(text) {
+  if (!state.ttsActive) return;
+  
+  // Stop previous audio playback
+  stopAllAudioPlayback();
+  
+  const clean = cleanTextForSpeech(text);
+  if (!clean) return;
+
+  if (btnVoiceToggle) btnVoiceToggle.classList.add("speaking");
+
+  // 1. Attempt Gemini 2.5 Flash Native Audio Output
+  try {
+    const res = await fetch(`${API_BASE}/api/chat/speech`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...getAuthHeaders()
+      },
+      body: JSON.stringify({
+        user_id: state.userId,
+        text: clean,
+        persona: state.activePersona || "general"
+      })
+    });
+    
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success && data.audio_base64) {
+        currentNativeAudio = new Audio("data:audio/wav;base64," + data.audio_base64);
+        currentNativeAudio.onended = () => {
+          if (btnVoiceToggle) btnVoiceToggle.classList.remove("speaking");
+        };
+        currentNativeAudio.onerror = () => {
+          fallbackToBrowserSpeech(clean);
+        };
+        await currentNativeAudio.play();
+        return;
+      }
+    }
+  } catch (err) {
+    console.warn("Gemini 2.5 Flash native audio request error, falling back:", err);
+  }
+
+  // 2. Fallback to soft-spoken US English Web Speech API
+  fallbackToBrowserSpeech(clean);
+}
+
+function fallbackToBrowserSpeech(cleanText) {
+  if (!window.speechSynthesis || !state.ttsActive) {
+    if (btnVoiceToggle) btnVoiceToggle.classList.remove("speaking");
+    return;
+  }
+
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  const voice = getPleasingVoice(state.activePersona || "general");
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang || "en-US";
+  }
+
+  const prosody = getVoiceProsody(state.activePersona || "general");
+  utterance.rate = prosody.rate;
+  utterance.pitch = prosody.pitch;
+  utterance.volume = prosody.volume;
+
+  utterance.onend = () => {
+    if (btnVoiceToggle) btnVoiceToggle.classList.remove("speaking");
+  };
+  utterance.onerror = () => {
+    if (btnVoiceToggle) btnVoiceToggle.classList.remove("speaking");
+  };
+
   window.speechSynthesis.speak(utterance);
 }
 

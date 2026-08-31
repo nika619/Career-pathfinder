@@ -34,7 +34,7 @@ from fastapi.responses import FileResponse, PlainTextResponse, JSONResponse
 from pydantic import BaseModel, Field, field_validator
 
 from .store import store
-from .assistant import parse_goal_to_role, explain_node_trace, answer_learner_query, ROLES_TAXONOMY
+from .assistant import parse_goal_to_role, explain_node_trace, answer_learner_query, generate_native_speech, ROLES_TAXONOMY
 from .diagnostic import (
     get_next_diagnostic_question,
     verify_answer,
@@ -227,7 +227,9 @@ class DiagnosticAnswerRequest(BaseSanitizedModel):
     @field_validator("question_text", "selected_option")
     @classmethod
     def sanitize_options(cls, v: str) -> str:
-        return sanitize_str(v, max_len=500)
+        if not v:
+            return ""
+        return str(v).strip()[:500]
 
 
 class PlanRequest(BaseSanitizedModel):
@@ -251,6 +253,18 @@ class ChatRequest(BaseSanitizedModel):
     @classmethod
     def sanitize_chat(cls, v: str) -> str:
         return sanitize_str(v, max_len=800)
+
+
+class SpeechRequest(BaseSanitizedModel):
+    text: str = Field(..., min_length=1, max_length=2000)
+    persona: Optional[str] = Field("general", max_length=50)
+
+    @field_validator("text")
+    @classmethod
+    def sanitize_speech_text(cls, v: str) -> str:
+        if not v:
+            return ""
+        return str(v).strip()[:2000]
 
 
 class MilestoneEvaluateRequest(BaseSanitizedModel):
@@ -618,6 +632,14 @@ def get_micro_challenge(req: BaseSanitizedModel, request: Request):
         "skill_id": target_skill,
         "question": item
     }
+
+
+@app.post("/api/chat/speech")
+def chat_speech(req: SpeechRequest, request: Request):
+    """Generate high-fidelity spoken audio using Gemini 2.5 Flash Native Audio."""
+    check_rate_limit(request, category="chat")
+    override_key = request.headers.get("X-Gemini-API-Key", "").strip() or None
+    return generate_native_speech(req.text, persona=req.persona or "general", override_key=override_key)
 
 
 @app.get("/api/export/markdown")

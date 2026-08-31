@@ -111,12 +111,12 @@
     {"q": "What does the 'L' stand for in SOLID design principles?", "options": ["Lambda", "Liskov Substitution Principle", "Linear Architecture", "Lazy Loading"], "answer": "Liskov Substitution Principle", "difficulty": 3}
   ],
   "data_structures": [
-    {"q": "What is the time complexity of accessing an element in an array by index?", "options": ["O(1)", "O(n)", "O(log n)", "O(n²)"], "answer": "O(1)", "difficulty": 1},
+    {"q": "What is the time complexity of accessing an element in an array by index?", "options": ["O(1)", "O(n)", "O(log n)", "O(n^2)"], "answer": "O(1)", "difficulty": 1},
     {"q": "Which data structure uses LIFO (Last In, First Out)?", "options": ["Queue", "Stack", "Linked List", "Tree"], "answer": "Stack", "difficulty": 1},
     {"q": "What is the average time complexity of hash table lookup?", "options": ["O(1)", "O(n)", "O(log n)", "O(n log n)"], "answer": "O(1)", "difficulty": 2}
   ],
   "algorithms": [
-    {"q": "What is the time complexity of merge sort?", "options": ["O(n)", "O(n log n)", "O(n²)", "O(log n)"], "answer": "O(n log n)", "difficulty": 2},
+    {"q": "What is the time complexity of merge sort?", "options": ["O(n)", "O(n log n)", "O(n^2)", "O(log n)"], "answer": "O(n log n)", "difficulty": 2},
     {"q": "Which technique solves problems by breaking them into overlapping subproblems?", "options": ["Greedy", "Divide and Conquer", "Dynamic Programming", "Backtracking"], "answer": "Dynamic Programming", "difficulty": 2},
     {"q": "BFS uses which data structure?", "options": ["Stack", "Queue", "Priority Queue", "Array"], "answer": "Queue", "difficulty": 1}
   ],

@@ -1067,6 +1067,20 @@ button { font-family: var(--sans); cursor: pointer; border: none; border-radius:
   box-shadow: 0 0 8px rgba(74, 222, 128, 0.3);
 }
 
+.btn-voice.speaking {
+  border-color: #38BDF8;
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.25);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.5);
+  animation: voiceWave 1.2s infinite ease-in-out;
+}
+
+@keyframes voiceWave {
+  0% { transform: scale(1); box-shadow: 0 0 4px rgba(56, 189, 248, 0.3); }
+  50% { transform: scale(1.08); box-shadow: 0 0 12px rgba(56, 189, 248, 0.65); }
+  100% { transform: scale(1); box-shadow: 0 0 4px rgba(56, 189, 248, 0.3); }
+}
+
 .mermaid-diagram-container {
   background: #0B0E14;
   border: 1px solid rgba(224, 166, 76, 0.35);
@@ -1513,6 +1527,49 @@ a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-vis
   border-radius: var(--radius-md);
 }
 .cpf-empty-state strong { color: var(--text); display: block; margin-bottom: 4px; }
+
+/* ----------------- Artisan Hallmark / Watermark ----------------- */
+.app-artisan-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px 28px;
+  margin-top: auto;
+  pointer-events: auto;
+}
+
+.artisan-watermark {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted, rgba(148, 163, 184, 0.5));
+  opacity: 0.38;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+  user-select: none;
+  cursor: default;
+}
+
+.artisan-watermark:hover {
+  opacity: 0.85;
+  color: var(--amber, #f59e0b);
+  transform: translateY(-1px);
+}
+
+.artisan-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--amber, #f59e0b);
+  opacity: 0.7;
+}
+
+.artisan-handle {
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
 
 /* ----------------- Print & PDF Export Stylesheet ----------------- */
 /* ----------------- Publication-Grade Print & PDF Export Stylesheet ----------------- */

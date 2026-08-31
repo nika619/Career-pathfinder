@@ -16,9 +16,16 @@ Includes zero-crash deterministic fallback logic if GEMINI_API_KEY is not config
 
 import os
 import json
+import urllib.request
+import base64
+import struct
+from pathlib import Path
 from typing import Any, Optional
 from dotenv import load_dotenv
 
+ENV_PATH = Path(__file__).resolve().parent.parent.parent / ".env"
+if ENV_PATH.exists():
+    load_dotenv(ENV_PATH)
 load_dotenv()
 
 ROLES_TAXONOMY = [
@@ -416,4 +423,120 @@ def answer_learner_query(question: str, context: dict[str, Any], persona: str = 
         f"You can ask me to explain any computer science concept, get feedback on project architectures, or explore upcoming milestones in your prerequisite graph.\n\n"
         f"What would you like to dive into next?"
     )
+
+
+def pcm_to_wav(pcm_data: bytes, sample_rate: int = 24000, num_channels: int = 1, bits_per_sample: int = 16) -> bytes:
+    """Package raw linear PCM audio bytes into a standard playable WAV container."""
+    byte_rate = sample_rate * num_channels * bits_per_sample // 8
+    block_align = num_channels * bits_per_sample // 8
+    data_size = len(pcm_data)
+    
+    header = struct.pack(
+        "<4sI4s4sIHHIIHH4sI",
+        b"RIFF",
+        36 + data_size,
+        b"WAVE",
+        b"fmt ",
+        16,
+        1,  # Format 1 = PCM
+        num_channels,
+        sample_rate,
+        byte_rate,
+        block_align,
+        bits_per_sample,
+        b"data",
+        data_size
+    )
+    return header + pcm_data
+
+
+# Persona mapping to Gemini 2.5 Flash native prebuilt voices
+NATIVE_VOICE_MAP = {
+    "general": "Kore",           # Soft, soothing, warm, conversational female
+    "algo_specialist": "Puck",    # Crisp, articulate, sharp, clear
+    "system_architect": "Fenrir", # Deep, measured, authoritative
+    "career_strategist": "Aoede"  # Polished, poised, executive coaching
+}
+
+
+def generate_native_speech(text: str, persona: str = "general", override_key: Optional[str] = None) -> dict[str, Any]:
+    """Generate high-fidelity spoken audio using Gemini 2.5 Flash native speech modality.
+    
+    Returns:
+        {
+            "success": bool,
+            "audio_base64": str (WAV container base64),
+            "mime_type": "audio/wav",
+            "voice": str,
+            "model": "gemini-2.5-flash-native-audio",
+            "fallback": bool
+        }
+    """
+    key = (override_key or "").strip() or os.getenv("GEMINI_API_KEY", "").strip() or _owner_api_key
+    if not key or key == "your_gemini_api_key_here":
+        return {"success": False, "fallback": True, "message": "Gemini API key not configured."}
+
+    # Clean text to remove markdown/mermaid diagram code before speaking
+    clean_text = text.strip()
+    if len(clean_text) > 600:
+        clean_text = clean_text[:600]
+
+    voice_name = NATIVE_VOICE_MAP.get(persona, "Kore")
+    
+    models_to_try = [
+        "gemini-2.5-flash-preview-tts",
+        "gemini-2.5-flash-native-audio-latest"
+    ]
+
+    for model_name in models_to_try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={key}"
+        payload = {
+            "contents": [{
+                "parts": [{
+                    "text": f"Speak in a soft, calm, natural voice as an AI Career Mentor: {clean_text}"
+                }]
+            }],
+            "generationConfig": {
+                "responseModalities": ["AUDIO"],
+                "speechConfig": {
+                    "voiceConfig": {
+                        "prebuiltVoiceConfig": {
+                            "voiceName": voice_name
+                        }
+                    }
+                }
+            }
+        }
+        try:
+            req = urllib.request.Request(
+                url,
+                data=json.dumps(payload).encode("utf-8"),
+                headers={"Content-Type": "application/json"}
+            )
+            with urllib.request.urlopen(req, timeout=12) as resp:
+                res = json.loads(resp.read().decode("utf-8"))
+                candidates = res.get("candidates", [])
+                if not candidates:
+                    continue
+                parts = candidates[0].get("content", {}).get("parts", [])
+                for part in parts:
+                    if "inlineData" in part:
+                        raw_b64 = part["inlineData"].get("data", "")
+                        if raw_b64:
+                            pcm_bytes = base64.b64decode(raw_b64)
+                            wav_bytes = pcm_to_wav(pcm_bytes)
+                            wav_b64 = base64.b64encode(wav_bytes).decode("ascii")
+                            return {
+                                "success": True,
+                                "audio_base64": wav_b64,
+                                "mime_type": "audio/wav",
+                                "voice": voice_name,
+                                "model": "gemini-2.5-flash-native-audio",
+                                "fallback": False
+                            }
+        except Exception:
+            continue
+
+    return {"success": False, "fallback": True, "message": "Gemini native speech generation unavailable."}
+
 

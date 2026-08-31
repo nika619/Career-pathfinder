@@ -146,37 +146,78 @@ def get_next_diagnostic_question(
     }
 
 
+import html
+
 def _normalize_ans(text: str) -> str:
-    """Normalize answer string by trimming, stripping outer quotes/backticks, and lowering."""
+    """Normalize answer string by unescaping HTML entities, trimming, stripping quotes/backticks/punctuation, and lowering."""
     if not text:
         return ""
-    cleaned = text.strip().lower()
-    # Strip wrapping quotes if present: 'el' -> el, "el" -> el, `el` -> el
-    for q in ('"', "'", '`'):
-        if cleaned.startswith(q) and cleaned.endswith(q) and len(cleaned) >= 2:
-            cleaned = cleaned[1:-1].strip()
-    return cleaned
+    cleaned = html.unescape(str(text)).strip().lower()
+    cleaned = cleaned.replace("’", "'").replace("‘", "'").replace('“', '"').replace('”', '"')
+    changed = True
+    while changed and len(cleaned) >= 2:
+        changed = False
+        for q in ('"', "'", '`'):
+            if cleaned.startswith(q) and cleaned.endswith(q):
+                cleaned = cleaned[1:-1].strip()
+                changed = True
+    return cleaned.strip()
+
+
+def _normalize_q(text: str) -> str:
+    """Normalize question text for robust matching."""
+    if not text:
+        return ""
+    q = html.unescape(str(text)).strip().lower()
+    q = q.replace("’", "'").replace("‘", "'").replace('“', '"').replace('”', '"')
+    q = q.replace("`", "")
+    return " ".join(q.split())
 
 
 def verify_answer(skill_id: str, question_text: str, selected_option: str) -> tuple[bool, str]:
-    """Verify if the chosen option is correct with robust normalization.
+    """Verify if the chosen option is correct with ultra-robust normalization.
+
+    Checks:
+    1. Direct match in target skill_id
+    2. Fallback search across all skills in the item bank if not found
+    3. HTML entity unescaping, normalized and raw answer comparisons
 
     Returns:
         (is_correct, correct_answer)
     """
-    items = _item_bank.get(skill_id, [])
-    norm_selected = _normalize_ans(selected_option)
+    if not question_text or not selected_option:
+        return False, "Unknown"
+
+    clean_q = html.unescape(str(question_text)).strip()
+    clean_sel = html.unescape(str(selected_option)).strip()
+
+    norm_selected = _normalize_ans(clean_sel)
+    norm_q = _normalize_q(clean_q)
+
+    # 1. First check in target skill_id
+    items = list(_item_bank.get(skill_id, []))
+    
+    # 2. Fallback search across all skills if not found in skill_id
+    if not items or not any(_normalize_q(it.get("q", "")) == norm_q for it in items):
+        all_items = []
+        for s_id, it_list in _item_bank.items():
+            all_items.extend(it_list)
+        items = all_items
 
     for item in items:
-        # Match question text (flexible on whitespace)
-        if item["q"].strip() == question_text.strip():
-            raw_answer = item["answer"]
+        raw_q = item.get("q", "")
+        if (raw_q.strip() == clean_q or 
+            _normalize_q(raw_q) == norm_q or 
+            norm_q in _normalize_q(raw_q) or 
+            _normalize_q(raw_q) in norm_q):
+            
+            raw_answer = item.get("answer", "")
             norm_answer = _normalize_ans(raw_answer)
             
-            # Match directly or normalized
             correct = (
-                raw_answer.strip().lower() == selected_option.strip().lower() or
-                norm_answer == norm_selected
+                raw_answer.strip().lower() == clean_sel.lower() or
+                norm_answer == norm_selected or
+                clean_sel == raw_answer.strip()
             )
             return correct, raw_answer
             
