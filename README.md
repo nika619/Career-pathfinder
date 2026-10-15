@@ -332,3 +332,8 @@ career-pathfinder/
 ## 📄 License
 Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
 
+
+
+---
+
+Built by [Mayank Tiwari](https://github.com/nika619) · [Hire me on Contra](https://contra.com/mayank_tiwari_a4vkcjsh)
